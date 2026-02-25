@@ -29,14 +29,14 @@
     <body class="bg-dark-mesh min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
         <div class="w-full max-w-md my-auto">
 
-            
+
             <!-- Login Card -->
         <div
             class="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-8 sm:p-10 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 space-y-8">
             <!-- Header -->
             <div class="text-center space-y-0">
                 <div class="inline-flex items-center justify-center overflow-hidden w-32 h-32 mx-auto rounded-[1.5rem]">
-                    <img src="{{ asset('img/logo.png') }}" alt="SIGEC Logo" class="w-full h-full object-contain scale-[1.75]">
+                    <a href="{{ route('login') }}"><img src="{{ asset('img/logo.png') }}" alt="SIGEC Logo" class="w-full h-full object-contain scale-[1.75]"></a>
                 </div>
                 <h3 class="text-xl font-light text-slate-300 tracking-wide">Sistema Gestión de Congresos</h3>
             </div>
@@ -44,7 +44,8 @@
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
-
+            <!-- Solo se muestra si es la vista login -->
+            @if(request()->routeIs('login'))
             <!-- Footer -->
             <div class="text-center pt-2">
                 <p class="text-sm text-slate-400">
@@ -53,7 +54,7 @@
                         class="text-blue-400 font-semibold hover:text-blue-300 transition-colors">Regístrate</a>
                 </p>
             </div>
-        </div>
+            @endif
         </div>
     </body>
 </html>
