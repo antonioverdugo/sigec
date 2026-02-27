@@ -82,26 +82,52 @@
 
                 <!-- Navigation Links -->
                 <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                    <!-- Dashboard se muestra para todos los users -->
                     <a href="{{ route('dashboard') }}"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-blue-400 bg-blue-500/10 border border-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/10">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="#"
+                    <!-- Usuarios, ponencias y patrocinadores solo si el usuarios es admin -->
+                    @if (Auth::user()->role->id === 3)
+                    <a href="{{ route('users.index') }}"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
                         <i data-lucide="users" class="w-5 h-5"></i>
                         <span>Usuarios</span>
                     </a>
+
                     <a href="#"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
-                        <span>Ponencias</span>
+                        <span>Ponencias Orales</span>
                     </a>
+                    <a href="#"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        <i data-lucide="presentation" class="w-5 h-5"></i>
+                        <span>Posters Cientificos</span>
+                    </a>
+
                     <a href="#"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
                         <i data-lucide="handshake" class="w-5 h-5"></i>
                         <span>Patrocinadores</span>
                     </a>
+                    @endif
+
+                    <!-- Ponencias y posters solo si el usuarios es ponente -->
+                    @if (Auth::user()->role->id === 2)
+
+                    <a href="#"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        <i data-lucide="presentation" class="w-5 h-5"></i>
+                        <span>Mis Ponencias</span>
+                    </a>
+                    <a href="#"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        <i data-lucide="presentation" class="w-5 h-5"></i>
+                        <span>Mis Poster Científicos</span>
+                    </a>
+                    @endif
                 </nav>
 
                 <!-- Bottom Actions -->

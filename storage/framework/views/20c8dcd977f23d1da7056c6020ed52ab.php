@@ -46,7 +46,7 @@
 
             </div>
             <!-- Solo se muestra si es la vista login -->
-            <?php if(request()->routeIs('login')): ?>
+            <?php if(request()->routeIs('login') || request()->routeIs('home')): ?>
             <!-- Footer -->
             <div class="text-center pt-2">
                 <p class="text-sm text-slate-400">

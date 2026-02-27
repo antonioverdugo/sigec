@@ -45,7 +45,7 @@
                 {{ $slot }}
             </div>
             <!-- Solo se muestra si es la vista login -->
-            @if(request()->routeIs('login'))
+            @if(request()->routeIs('login') || request()->routeIs('home'))
             <!-- Footer -->
             <div class="text-center pt-2">
                 <p class="text-sm text-slate-400">
