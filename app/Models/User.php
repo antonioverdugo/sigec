@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -45,5 +46,15 @@ class User extends Authenticatable
   public function role(): BelongsTo
   {
     return $this->belongsTo(Role::class);
+  }
+
+  // Devolver las iniciales del usuario
+  // En app/Models/User.php
+  public function getInitialsAttribute(): string
+  {
+    return collect(explode(' ', $this->name))
+      ->map(fn($w) => Str::substr($w, 0, 1))
+      ->take(2)
+      ->implode('');
   }
 }

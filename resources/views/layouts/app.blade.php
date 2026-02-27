@@ -54,10 +54,12 @@
                 <!-- User Profile with Dropdown -->
                 <div class="px-4 py-4 border-b border-slate-800/50" x-data="{ open: false }">
                     <button @click="open = !open" class="w-full flex items-center space-x-3 hover:bg-slate-800/50 p-2 rounded-xl transition-all">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=3b82f6&color=fff" alt="{{ Auth::user()->name }}"
-                            class="w-10 h-10 rounded-full border-2 border-slate-700">
+                        <!-- Pintar las iniciales del usuario y su nombre -->
+                        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-semibold border-2 border-slate-700">
+                            {{ collect(explode(' ', Auth::user()->name))->map(fn($w) => Str::substr($w, 0, 1))->take(2)->implode('') }}
+                        </div>
                         <div class="flex-1 text-left">
-                            <h4 class="text-sm font-semibold text-white">{{ Auth::user()->name }}</h4>
+                            <h4 class="text-sm font-semibold text-white">{{ Auth::user()->name }}<br>( {{ucwords(Auth::user()->role->name)}} )</h4>
                             <p class="text-xs text-slate-500">{{ Auth::user()->email }}</p>
                         </div>
                         <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform" :class="{'rotate-180': open}"></i>
@@ -82,33 +84,37 @@
 
                 <!-- Navigation Links -->
                 <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                    @php
+                        $activeLink = 'text-blue-400 bg-blue-500/10 border border-blue-500/20 hover:shadow-lg hover:shadow-blue-500/10';
+                        $inactiveLink = 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50';
+                    @endphp
                     <!-- Dashboard se muestra para todos los users -->
                     <a href="{{ route('dashboard') }}"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-blue-400 bg-blue-500/10 border border-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/10">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('dashboard') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                         <span>Dashboard</span>
                     </a>
                     <!-- Usuarios, ponencias y patrocinadores solo si el usuarios es admin -->
                     @if (Auth::user()->role->id === 3)
                     <a href="{{ route('users.index') }}"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('users.*') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="users" class="w-5 h-5"></i>
                         <span>Usuarios</span>
                     </a>
 
                     <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Ponencias Orales</span>
                     </a>
                     <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Posters Cientificos</span>
                     </a>
 
                     <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
                         <i data-lucide="handshake" class="w-5 h-5"></i>
                         <span>Patrocinadores</span>
                     </a>
@@ -118,12 +124,12 @@
                     @if (Auth::user()->role->id === 2)
 
                     <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Mis Ponencias</span>
                     </a>
                     <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Mis Poster Científicos</span>
                     </a>

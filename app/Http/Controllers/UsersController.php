@@ -2,37 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class UsersController extends Controller
 {
   /**
-   * Listar todos los usuarios
+   * Método para listar todos los usuarios
    */
   public function index(): View
   {
-    if (auth()->user()->role->id !== 3) {
-      return view('errors.access-denied');
-    }
-    return view('dashboard.users');
+    // if (auth()->user()->role->id !== 3) {
+    //   return view('errors.access-denied');
+    // }
+    $users = User::with('role')->orderBy('created_at', 'desc')->get();
+
+    return view('dashboard.users.index', compact('users'));
   }
 
   /**
-   * Mostrar el formularios para crear un usuario
+   * Método para crear un usuario
    */
-  public function create()
-  {
-    //
-  }
+  public function create() {}
 
   /**
-   * Store a newly created resource in storage.
+   * Método para almacenar un usuario
    */
-  public function store(Request $request)
+  public function store(CreateUserRequest $request)
   {
-    //
+    // Crear el usuario
+    User::create([
+      'name' => $request->name,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+      'role_id' => $request->role_id,
+    ]);
+
+    // Redireccionar al listado de usuarios con mensaje de éxito
+    return redirect()
+      ->route('users.index')
+      ->with('success', 'Usuario creado exitosamente');
   }
 
   /**

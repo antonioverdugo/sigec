@@ -5,7 +5,7 @@
             <!-- Header -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-white tracking-tight">Bienvenido, {{ Auth::user()->name }}</h1>
+                    <h1 class="text-3xl font-bold text-white tracking-tight">Bienvenido, {{ Auth::user()->name }} ( {{ ucwords(Auth::user()->role->name) }} )</h1>
                     <p class="text-slate-400 mt-1">Panel de control de Gestión de Congresos</p>
                 </div>
             </div>
