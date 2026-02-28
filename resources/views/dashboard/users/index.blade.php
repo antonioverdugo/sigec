@@ -37,7 +37,7 @@
                             <span class="text-sm font-medium text-white">{{ $user->name }}</span>
                         </div>
                         <!-- Pintar el email -->
-                        <div class="text-sm text-slate-300">{{ $user->mail }}</div>
+                        <div class="text-sm text-slate-300">{{ $user->email }}</div>
                         <!--Pintar el email-->
                         <div>
                             <span class="md:hidden text-xs text-slate-400">Rol: </span>
@@ -58,5 +58,44 @@
                 @endforelse
             </div>
         </div>
+    </div>
+    {{-- Paginación centrado --}}
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
+        <p class="text-sm text-slate-400 order-2 md:order-1">
+            Mostrando {{ $users->firstItem() }} - {{ $users->lastItem() }} de {{ $users->total() }} usuarios
+        </p>
+
+        <nav class="flex gap-2 order-1 md:order-2">
+            {{-- Botón Anterior --}}
+            @if ($users->onFirstPage())
+                <span class="px-4 py-2 text-sm text-slate-600 bg-slate-800/50 rounded-lg cursor-not-allowed">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </span>
+            @else
+                <a href="{{ $users->previousPageUrl() }}" class="px-4 py-2 text-sm text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </a>
+            @endif
+
+            {{-- Números de página --}}
+            @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                @if ($page == $users->currentPage())
+                    <span class="px-4 py-2 text-sm text-white bg-blue-600 rounded-lg">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}" class="px-4 py-2 text-sm text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            {{-- Botón Siguiente --}}
+            @if ($users->hasMorePages())
+                <a href="{{ $users->nextPageUrl() }}" class="px-4 py-2 text-sm text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            @else
+                <span class="px-4 py-2 text-sm text-slate-600 bg-slate-800/50 rounded-lg cursor-not-allowed">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </span>
+            @endif
+        </nav>
     </div>
 </x-app-layout>

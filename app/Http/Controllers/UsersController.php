@@ -18,7 +18,7 @@ class UsersController extends Controller
     // if (auth()->user()->role->id !== 3) {
     //   return view('errors.access-denied');
     // }
-    $users = User::with('role')->orderBy('created_at', 'desc')->get();
+    $users = User::with('role')->orderBy('created_at', 'desc')->paginate(8);
 
     return view('dashboard.users.index', compact('users'));
   }

@@ -19,11 +19,11 @@
                             <i data-lucide="users" class="w-4 h-4"></i>
                         </div>
                     </div>
-                    <h3 class="text-3xl font-bold text-white">2,543</h3>
-                    <p class="text-xs text-green-400 flex items-center mt-2">
+                    <h3 class="text-3xl font-bold text-white">{{$countUser}}</h3>
+                    {{-- <p class="text-xs text-green-400 flex items-center mt-2">
                         <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
                         +12.5% este mes
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-violet-500/30 transition-colors group">
