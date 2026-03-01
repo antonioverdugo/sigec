@@ -23,7 +23,7 @@ class CreateUserRequest extends FormRequest
   {
     return [
       // Validar los datos para crear un usuario
-      'name' => 'required|string|max:255',
+      'name' => 'required|string|min:3|max:255',
       'email' => 'required|email|unique:users',
       'password' => 'required|string|min:8',
       'role_id' => 'required|exists:roles,id',

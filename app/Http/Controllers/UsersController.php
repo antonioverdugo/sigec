@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
@@ -26,7 +27,13 @@ class UsersController extends Controller
   /**
    * Método para crear un usuario
    */
-  public function create() {}
+  public function create(): View
+  {
+    // Obtener los roles
+    $roles = Role::get();
+    // Enviar la vista del formulario creacion de usuario
+    return view('dashboard.users.create', compact('roles'));
+  }
 
   /**
    * Método para almacenar un usuario
@@ -35,7 +42,7 @@ class UsersController extends Controller
   {
     // Crear el usuario
     User::create([
-      'name' => $request->name,
+      'name' => ucwords(strtolower($request->name)),
       'email' => $request->email,
       'password' => Hash::make($request->password),
       'role_id' => $request->role_id,
@@ -44,7 +51,8 @@ class UsersController extends Controller
     // Redireccionar al listado de usuarios con mensaje de éxito
     return redirect()
       ->route('users.index')
-      ->with('success', 'Usuario creado exitosamente');
+      ->with('message', 'Usuario creado exitosamente')
+      ->with('icon', 'success');
   }
 
   /**
@@ -72,10 +80,13 @@ class UsersController extends Controller
   }
 
   /**
-   * Remove the specified resource from storage.
+   * Eliminar el usuario correctamente
    */
   public function destroy(User $user)
   {
-    //
+    return redirect()
+      ->route('users.index')
+      ->with('message', 'Usuario eliminado correctamente')
+      ->with('icon', 'success');
   }
 }

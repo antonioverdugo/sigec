@@ -6,7 +6,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
+        <!-- Favicon -->
+        <link rel="icon" href="{{asset('img/favicon.ico')}}">
+        <link rel="apple-touch-icon" href="{{asset('img/apple-touch-icon.png')}}">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -15,6 +17,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <style>
             .bg-dark-mesh {
@@ -195,5 +198,16 @@
                 }
             </script>
         </div>
+        <!-- Mostrar mensaje de confirmación -->
+        @if(($mensaje = Session::get('message')) && ($icono = Session::get('icon')))
+            <script>
+                Swal.fire({
+                position: "center",
+                icon: "{{ $icono }}",
+                title: "{{ $mensaje }}",
+                showConfirmButton: true,
+                });
+            </script>
+        @endif
     </body>
 </html>

@@ -20,12 +20,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/dashboard/users', [UsersController::class, 'index'])->name(
     'users.index',
   );
-  Route::get('/dashboard/create', [UsersController::class, 'create'])->name(
-    'users.create',
-  );
-  Route::post('/dashboard/users', [UsersController::class, 'store'])->name(
-    'users.store',
-  );
+  Route::get('/dashboard/users/create', [
+    UsersController::class,
+    'create',
+  ])->name('users.create');
+  Route::post('/dashboard/users/store', [
+    UsersController::class,
+    'store',
+  ])->name('users.store');
   Route::get('/dashboard/users/{user}', [UsersController::class, 'show'])->name(
     'users.show',
   );

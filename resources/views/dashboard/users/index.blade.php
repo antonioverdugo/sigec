@@ -1,12 +1,12 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto p-6 md:p-10 space-y-8">
-        <!-- Header -->
+        <!-- Cabecera -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <h1 class="text-3xl font-bold text-white tracking-tight">Gestión de Usuarios</h1>
                 <p class="text-slate-400 mt-1">Administra los usuarios del sistema</p>
             </div>
-            <a href="#"
+            <a href="{{route('users.create')}}"
                 class="inline-flex items-center justify-center space-x-2 px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>Crear Usuario</span>
@@ -45,10 +45,15 @@
                         </div>
                         <!--Pintar la fecha de creacion del usuario-->
                         <div class="text-sm text-slate-400"><span class="md:hidden">Fecha: </span>{{ $user->created_at->format('d-m-Y') }}</div>
+                        <!--Pintar las acciones de CRUD-->
                         <div class="flex items-center justify-end space-x-2">
-                            <button class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                            <button class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></button>
-                            <button class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <a class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></a>
+                            <a href="#" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
+                            <form action="{{ route('users.destroy', [$user]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </form>
                         </div>
                     </div>
                 @empty
