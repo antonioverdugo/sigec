@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
@@ -38,7 +41,7 @@ class UsersController extends Controller
   /**
    * Método para almacenar un usuario
    */
-  public function store(CreateUserRequest $request)
+  public function store(CreateUserRequest $request): RedirectResponse
   {
     // Crear el usuario
     User::create([
@@ -56,37 +59,74 @@ class UsersController extends Controller
   }
 
   /**
-   * Display the specified resource.
+   * Muestra el formulario para actualizar el usuario
    */
-  public function show(User $user)
+  public function edit(int $idUser): View
   {
-    //
+    // Obtener el usuario o falla
+    $user = $this->findUser($idUser);
+    // Obtener los roles
+    $roles = Role::get();
+    // Retorna una vista a la que le pasamos
+    return view('dashboard.users.edit', compact('user', 'roles'));
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * Método para actualizar el usuario
    */
-  public function edit(User $user)
-  {
-    //
-  }
+  public function update(
+    UpdateUserRequest $request,
+    User $user,
+  ): RedirectResponse {
+    // Los datos se validad en UpdateUserRequest
+    $data = [
+      'name' => ucwords(strtolower($request->name)),
+      'role_id' => $request->role_id,
+    ];
 
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, User $user)
-  {
-    //
+    // Si el email es distinto es que ha cambiado
+    if ($request->email !== $user->email) {
+      $data['email'] = $request->email;
+    }
+
+    // Si el password tiene algo se guarda con hash en la data
+    if ($request->filled('password')) {
+      $data['password'] = Hash::make($request->password);
+    }
+
+    // Se actualiza el usuario
+    User::where('id', $user->id)->update($data);
+
+    // Redirigimos a la vista
+    return redirect()
+      ->route('users.index')
+      ->with('message', 'Usuario actualizado correctamente')
+      ->with('icon', 'success');
   }
 
   /**
    * Eliminar el usuario correctamente
    */
-  public function destroy(User $user)
+  public function destroy(User $user): RedirectResponse
   {
+    // Comprobar que el usuario existe
+    $userFind = $this->findUser($user->id);
+
+    // Eliminamos el usuario
+    User::where('id', $userFind->id)->delete();
+
+    // Retornamos a la vista con el mensaje
     return redirect()
       ->route('users.index')
       ->with('message', 'Usuario eliminado correctamente')
       ->with('icon', 'success');
+  }
+
+  /**
+   * Método para comprobar que existe el usuario
+   */
+  private function findUser(int $id): User|ModelNotFoundException
+  {
+    return User::findOrFail($id);
   }
 }

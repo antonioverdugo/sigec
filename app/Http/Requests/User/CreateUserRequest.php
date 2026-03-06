@@ -21,10 +21,15 @@ class CreateUserRequest extends FormRequest
    */
   public function rules(): array
   {
+    $userId = $this->user?->id;
     return [
       // Validar los datos para crear un usuario
       'name' => 'required|string|min:3|max:255',
-      'email' => 'required|email|unique:users',
+      'email' => [
+        'required',
+        'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+        'unique:users,email,' . $userId,
+      ],
       'password' => 'required|string|min:8',
       'role_id' => 'required|exists:roles,id',
     ];

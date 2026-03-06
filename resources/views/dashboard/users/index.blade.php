@@ -48,11 +48,11 @@
                         <!--Pintar las acciones de CRUD-->
                         <div class="flex items-center justify-end space-x-2">
                             <a class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></a>
-                            <a href="#" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
+                            <a href="{{route('users.edit', ['user'=>$user->id])}}" title="Editar Usuario" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
                             <form action="{{ route('users.destroy', [$user]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                <button title="Eliminar Usuario" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </form>
                         </div>
                     </div>

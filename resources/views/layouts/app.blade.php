@@ -198,7 +198,7 @@
                 }
             </script>
         </div>
-        <!-- Mostrar mensaje de confirmación -->
+        <!-- Mostrar mensaje de confirmacion con sweetalert2-->
         @if(($mensaje = Session::get('message')) && ($icono = Session::get('icon')))
             <script>
                 Swal.fire({
