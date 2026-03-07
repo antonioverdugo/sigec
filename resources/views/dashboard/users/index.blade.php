@@ -49,7 +49,7 @@
                         <div class="flex items-center justify-end space-x-2">
                             <a class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></a>
                             <a href="{{route('users.edit', ['user'=>$user->id])}}" title="Editar Usuario" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
-                            <form action="{{ route('users.destroy', [$user]) }}" method="POST">
+                            <form action="{{ route('users.destroy', [$user]) }}" method="POST" class="form-delete">
                                 @csrf
                                 @method('DELETE')
                                 <button title="Eliminar Usuario" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    {{-- Paginación centrado --}}
+    <!-- Paginación centrado -->
     <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
         <p class="text-sm text-slate-400 order-2 md:order-1">
             Mostrando {{ $users->firstItem() }} - {{ $users->lastItem() }} de {{ $users->total() }} usuarios
@@ -82,7 +82,7 @@
                 </a>
             @endif
 
-            {{-- Números de página --}}
+           <!-- Numeros de paginas -->
             @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
                 @if ($page == $users->currentPage())
                     <span class="px-4 py-2 text-sm text-white bg-blue-600 rounded-lg">{{ $page }}</span>
@@ -91,7 +91,7 @@
                 @endif
             @endforeach
 
-            {{-- Botón Siguiente --}}
+           <!-- Botón siguiente -->
             @if ($users->hasMorePages())
                 <a href="{{ $users->nextPageUrl() }}" class="px-4 py-2 text-sm text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
                     <i data-lucide="chevron-right" class="w-4 h-4"></i>
