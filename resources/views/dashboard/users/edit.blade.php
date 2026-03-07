@@ -25,7 +25,7 @@
                         oninput="this.setCustomValidity('')"
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                         placeholder="Ingresa el nombre del usuario"
-                        value="{{$user->name}}"
+                        value="{{ old('name', $user->name) }}"
                     >
                     @error('name')
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
@@ -40,7 +40,7 @@
                         oninput="this.setCustomValidity('')"
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                         placeholder="correo@ejemplo.com"
-                        value="{{$user->email}}">
+                        value="{{ old('email', $user->email) }}">
                     @error('email')
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
@@ -69,12 +69,7 @@
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none cursor-pointer">
                         <option value="" class="bg-slate-800" disabled>Selecciona un rol</option>
                         @foreach($roles as $role)
-
-                            @if($role->id == $user->role->id)
-                                <option value="{{ $role->id }}" class="bg-slate-800" selected="selected">{{ ucwords($role->name) }} </option>
-                            @else
-                                <option value="{{ $role->id }}" class="bg-slate-800">{{ ucwords($role->name) }}</option>
-                            @endif
+                            <option value="{{ $role->id }}" class="bg-slate-800" {{ old('role_id', $user->role->id) == $role->id ? 'selected' : ''}}>{{ ucwords($role->name) }} </option>
                         @endforeach
                     </select>
                     @error('role_id')
