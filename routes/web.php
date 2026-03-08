@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\Tools\DashboardController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
     'destroy',
   ])->name('users.destroy');
 });
+
+
+// Rutas para gestionar los patrocinadores
+Route::middleware(['auth', 'verified'])->group(function () {
+  Route::get('/dashboard/sponsors', [SponsorController::class, 'index'])->name(
+    'sponsors.index',
+  );
+  Route::get('/dashboard/sponsors/create', [
+    SponsorController::class,
+    'create',
+  ])->name('sponsors.create');
+  Route::post('/dashboard/sponsors/store', [
+    SponsorController::class,
+    'store',
+  ])->name('sponsors.store');
+  Route::get('/dashboard/sponsors/{sponsor}', [SponsorController::class, 'show'])->name(
+    'sponsors.show',
+  );
+  Route::get('/dashboard/sponsors/{sponsor}/edit', [
+    SponsorController::class,
+    'edit',
+  ])->name('sponsors.edit');
+  Route::put('/dashboard/sponsors/{sponsor}', [
+    SponsorController::class,
+    'update',
+  ])->name('sponsors.update');
+  Route::delete('/dashboard/sponsors/{sponsor}', [
+    SponsorController::class,
+    'destroy',
+  ])->name('sponsors.destroy');
+});
+
 
 // Rutas para cambiar los datos del perfil de usuario
 Route::middleware('auth')->group(function () {

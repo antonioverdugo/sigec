@@ -11,11 +11,10 @@ return new class extends Migration {
   public function up(): void
   {
     //Añadir la columna de role como foreign de role
-    Schema::table('users', function (Blueprint $table): void {
+    Schema::table('sponsors', function (Blueprint $table): void {
       $table
-        ->foreignId('role_id')
-        ->default(1)
-        ->constrained('roles')
+        ->foreignId('type_sponsor_id')
+        ->constrained('types_sponsors')
         ->onDelete('cascade')
         ->onUpdate('cascade');
     });
@@ -27,9 +26,9 @@ return new class extends Migration {
   public function down(): void
   {
     // Acciones para el rollback
-    Schema::table('users', function (Blueprint $table): void {
-      $table->dropForeign(['role_id']);
-      $table->dropColumn('role_id');
+    Schema::table('sponsors', function (Blueprint $table): void {
+      $table->dropForeign(['type_sponsor_id']);
+      $table->dropColumn('type_sponsor_id');
     });
   }
 };
