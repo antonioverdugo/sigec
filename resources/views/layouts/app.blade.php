@@ -129,7 +129,7 @@
                     </a>
 
                     <a href="{{ route('sponsors.index') }}"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('sponsors.index') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="handshake" class="w-5 h-5"></i>
                         <span>Patrocinadores</span>
                     </a>

@@ -24,7 +24,7 @@ class Sponsor extends Model
   /**
    * Añade la relacion con la tabla type_sponsor
    */
-  public function typeSponsor(): BelongsTo
+  public function type_sponsor(): BelongsTo
   {
     return $this->belongsTo(TypeSponsor::class);
   }

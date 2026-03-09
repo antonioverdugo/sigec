@@ -14,7 +14,7 @@ return new class extends Migration {
     Schema::table('sponsors', function (Blueprint $table): void {
       $table
         ->foreignId('type_sponsor_id')
-        ->constrained('types_sponsors')
+        ->constrained('type_sponsors')
         ->onDelete('cascade')
         ->onUpdate('cascade');
     });

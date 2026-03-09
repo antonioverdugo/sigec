@@ -14,7 +14,7 @@
             <!-- Header -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-white tracking-tight">Bienvenido, <?php echo e(Auth::user()->name); ?></h1>
+                    <h1 class="text-3xl font-bold text-white tracking-tight">Bienvenido, <?php echo e(Auth::user()->name); ?> ( <?php echo e(ucwords(Auth::user()->role->name)); ?> )</h1>
                     <p class="text-slate-400 mt-1">Panel de control de Gestión de Congresos</p>
                 </div>
             </div>
@@ -28,11 +28,8 @@
                             <i data-lucide="users" class="w-4 h-4"></i>
                         </div>
                     </div>
-                    <h3 class="text-3xl font-bold text-white">2,543</h3>
-                    <p class="text-xs text-green-400 flex items-center mt-2">
-                        <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
-                        +12.5% este mes
-                    </p>
+                    <h3 class="text-3xl font-bold text-white"><?php echo e($countUser); ?></h3>
+                    
                 </div>
 
                 <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-violet-500/30 transition-colors group">

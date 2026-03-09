@@ -46,7 +46,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
   ])->name('users.destroy');
 });
 
-
 // Rutas para gestionar los patrocinadores
 Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/dashboard/sponsors', [SponsorController::class, 'index'])->name(
@@ -60,9 +59,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     SponsorController::class,
     'store',
   ])->name('sponsors.store');
-  Route::get('/dashboard/sponsors/{sponsor}', [SponsorController::class, 'show'])->name(
-    'sponsors.show',
-  );
+  Route::get('/dashboard/sponsors/{sponsor}', [
+    SponsorController::class,
+    'show',
+  ])->name('sponsors.show');
   Route::get('/dashboard/sponsors/{sponsor}/edit', [
     SponsorController::class,
     'edit',
@@ -76,7 +76,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     'destroy',
   ])->name('sponsors.destroy');
 });
-
 
 // Rutas para cambiar los datos del perfil de usuario
 Route::middleware('auth')->group(function () {

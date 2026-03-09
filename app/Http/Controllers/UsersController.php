@@ -27,7 +27,16 @@ class UsersController extends Controller
   }
 
   /**
-   * Método para crear un usuario
+   * Método para mostrar un usuario
+   */
+
+  public function show(int $id): RedirectResponse
+  {
+    return redirect()->route('users.index');
+  }
+
+  /**
+   * Método para mostrar vista para crear un usuario
    */
   public function create(): View
   {
