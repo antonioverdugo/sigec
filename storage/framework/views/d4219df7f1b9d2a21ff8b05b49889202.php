@@ -118,6 +118,18 @@
                         <span>Usuarios</span>
                     </a>
 
+                    <a href="<?php echo e(route('sponsors.index')); ?>"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all <?php echo e(request()->routeIs('sponsors.index') ? $activeLink : $inactiveLink); ?>">
+                        <i data-lucide="handshake" class="w-5 h-5"></i>
+                        <span>Patrocinadores</span>
+                    </a>
+
+                    <a href="<?php echo e(route('categories.index')); ?>"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all <?php echo e(request()->routeIs('categories.index') ? $activeLink : $inactiveLink); ?>">
+                        <i data-lucide="tag" class="w-5 h-5"></i>
+                        <span>Categorias</span>
+                    </a>
+
                     <a href="#"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all <?php echo e($inactiveLink); ?>">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
@@ -125,15 +137,10 @@
                     </a>
                     <a href="#"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all <?php echo e($inactiveLink); ?>">
-                        <i data-lucide="presentation" class="w-5 h-5"></i>
+                        <i data-lucide="scroll" class="w-5 h-5"></i>
                         <span>Posters Cientificos</span>
                     </a>
 
-                    <a href="<?php echo e(route('sponsors.index')); ?>"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all <?php echo e(request()->routeIs('sponsors.index') ? $activeLink : $inactiveLink); ?>">
-                        <i data-lucide="handshake" class="w-5 h-5"></i>
-                        <span>Patrocinadores</span>
-                    </a>
                 <?php endif; ?>
 
                 <!-- Ponencias y posters solo si el usuarios es ponente -->
@@ -156,7 +163,7 @@
             <div class="p-4 border-t border-slate-800/50">
                 <a href="#"
                     class="w-full flex items-center justify-center space-x-2 px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 rounded-xl shadow-lg shadow-violet-600/20 transition-all active:scale-95">
-                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <i data-lucide="scroll" class="w-4 h-4"></i>
                     <span>Posters Científicos</span>
                 </a>
             </div>

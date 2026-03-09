@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\Tools\DashboardController;
@@ -75,6 +76,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
     SponsorController::class,
     'destroy',
   ])->name('sponsors.destroy');
+});
+
+// Rutas para gestionar las categorias
+Route::middleware(['auth', 'verified'])->group(function () {
+  Route::get('/dashboard/categories', [
+    CategoryController::class,
+    'index',
+  ])->name('categories.index');
+  Route::get('/dashboard/categories/create', [
+    CategoryController::class,
+    'create',
+  ])->name('categories.create');
+  Route::post('/dashboard/categories/store', [
+    CategoryController::class,
+    'store',
+  ])->name('categories.store');
+  Route::get('/dashboard/categories/{category}', [
+    CategoryController::class,
+    'show',
+  ])->name('categories.show');
+  Route::get('/dashboard/categories/{category}/edit', [
+    CategoryController::class,
+    'edit',
+  ])->name('categories.edit');
+  Route::put('/dashboard/categories/{category}', [
+    CategoryController::class,
+    'update',
+  ])->name('categories.update');
+  Route::delete('/dashboard/categories/{category}', [
+    CategoryController::class,
+    'destroy',
+  ])->name('categories.destroy');
 });
 
 // Rutas para cambiar los datos del perfil de usuario
