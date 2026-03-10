@@ -2,66 +2,113 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
   /**
-   * Display a listing of the resource.
+   * Listar todas las categorías
    */
   public function index(): View
   {
-    //$categories = Category::get();
-    return view('dashboard.categories.index');
+    // Obtener todas las categorías
+    $categories = Category::paginate(8);
+    return view('dashboard.categories.index', compact('categories'));
   }
 
   /**
-   * Show the form for creating a new resource.
+   * Mostrar el formulario para crear una nueva categoría
    */
-  public function create()
+  public function create(): View
   {
-    //
+    // Retornamos la vista del formulario para crear una nueva categoria
+    return view('dashboard.categories.create');
   }
 
   /**
-   * Store a newly created resource in storage.
+   * Guardar una nueva categoría
    */
-  public function store(Request $request)
+  public function store(CreateCategoryRequest $request): RedirectResponse
   {
-    //
+    //Crear la categoria
+    Category::create([
+      'name' => ucwords(strtolower(trim($request->name))),
+      'description' => trim($request->description),
+    ]);
+
+    // Redirigir a la lista de categorias con mensaje de éxito
+    return redirect()
+      ->route('categories.index')
+      ->with('message', 'Categoria creada correctamente')
+      ->with('icon', 'success');
   }
 
   /**
-   * Display the specified resource.
+   * Mostrar una categoría específica
    */
-  public function show(Category $category)
+  public function show(Category $category): RedirectResponse
   {
-    //
+    // Como no es necesaria este metodo voy a redirigira a la lista de categorias
+    return redirect()->route('categories.index');
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * Mostrar el formulario para editar una categoría
    */
-  public function edit(Category $category)
+  public function edit(Category $category): View
   {
-    //
+    // Comprobamos que la categoria existe
+    $category = $this->findCategory($category->id);
+    // Retornamos la vista para modidificar una categoria
+    return view('dashboard.categories.edit', compact('category'));
   }
 
   /**
-   * Update the specified resource in storage.
+   * Actualizar una categoría existente
    */
-  public function update(Request $request, Category $category)
+  public function update(UpdateCategoryRequest $request, Category $category)
   {
-    //
+    $data = [
+      'name' => ucwords(strtolower(trim($request->name))),
+      'description' => $request->description,
+    ];
+
+    // Actualizar la categoria
+    Category::where('id', $category->id)->update($data);
+    // Redirigir a la lista de categorías con mensaje de éxito
+    return redirect()
+      ->route('categories.index')
+      ->with('message', 'Categoria actualizada correctamente')
+      ->with('icon', 'success');
   }
 
   /**
-   * Remove the specified resource from storage.
+   * Eliminar una categoría existente
    */
   public function destroy(Category $category)
   {
-    //
+    // Comprobamos que la categoria existe
+    $findCategory = $this->findCategory($category->id);
+    // Si existe eliminar la categoria
+    Category::where('id', $findCategory->id)->delete();
+    // Redirigir a la lista de categorías con mensaje de éxito
+    return redirect()
+      ->route('categories.index')
+      ->with('message', 'Categoria eliminada correctamente')
+      ->with('icon', 'success');
+  }
+
+  /**
+   * Método para comprobar que existe una categoría
+   */
+  public function findCategory(int $id): Category|ModelNotFoundException
+  {
+    return Category::findOrfail($id);
   }
 }
