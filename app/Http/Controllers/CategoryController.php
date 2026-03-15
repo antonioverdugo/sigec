@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
@@ -61,8 +60,12 @@ class CategoryController extends Controller
   /**
    * Mostrar el formulario para editar una categoría
    */
-  public function edit(Category $category): View
+  public function edit(Category $category): View|RedirectResponse
   {
+    // Si la categoria es la general no permitir editarla
+    if ($category->id === 1) {
+      return redirect()->route('categories.index');
+    }
     // Comprobamos que la categoria existe
     $category = $this->findCategory($category->id);
     // Retornamos la vista para modidificar una categoria

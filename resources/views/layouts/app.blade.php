@@ -110,7 +110,7 @@
                     <span>Dashboard</span>
                 </a>
                 <!-- Usuarios, ponencias y patrocinadores solo si el usuarios es admin -->
-                @if (Auth::user()->role->id === 3)
+                @if (Auth::user()->role->name === 'admin')
                     <a href="{{ route('users.index') }}"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('users.*') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="users" class="w-5 h-5"></i>
@@ -129,8 +129,8 @@
                         <span>Categorias</span>
                     </a>
 
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
+                    <a href="{{ route('presentations.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('presentations.index') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Ponencias Orales</span>
                     </a>
@@ -143,12 +143,12 @@
                 @endif
 
                 <!-- Ponencias y posters solo si el usuarios es ponente -->
-                @if (Auth::user()->role->id === 2)
+                @if (Auth::user()->role->name === 'ponente')
 
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
+                    <a href="{{ route('presentations.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('presentations.index') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
-                        <span>Mis Ponencias</span>
+                        <span>Mis Ponencias Orales</span>
                     </a>
                     <a href="#"
                         class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">

@@ -43,13 +43,17 @@
                         <div class="text-sm text-slate-400 text-center"><span class="md:hidden">Fecha: </span>{{ $category->created_at->format('d-m-Y') }}</div>
                         <!--Pintar las acciones de CRUD-->
                         <div class="flex items-center justify-end space-x-2">
-                             <!-- <a class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></a> -->
-                            <a href="{{route('categories.edit', ['category'=>$category->id])}}" title="Editar Categoria" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
-                            <form action="{{ route('categories.destroy', [$category]) }}" method="POST" class="form-delete">
-                                @csrf
-                                @method('DELETE')
-                                <button title="Eliminar Categoria" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                            </form>
+                            @if ($category->id !== 1)
+                                <!-- <a class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></a> -->
+                                <a href="{{route('categories.edit', ['category'=>$category->id])}}" title="Editar Categoria" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
+                                <form action="{{ route('categories.destroy', [$category]) }}" method="POST" class="form-delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button title="Eliminar Categoria" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                </form>
+                            @else
+                                <p>Categia no editable</p>
+                            @endif
                         </div>
                     </div>
                 @empty

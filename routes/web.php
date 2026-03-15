@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\Tools\DashboardController;
@@ -18,7 +19,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
   ->name('dashboard');
 
 // Rutas para gestionar los usuarios
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
   Route::get('/dashboard/users', [UsersController::class, 'index'])->name(
     'users.index',
   );
@@ -48,7 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Rutas para gestionar los patrocinadores
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
   Route::get('/dashboard/sponsors', [SponsorController::class, 'index'])->name(
     'sponsors.index',
   );
@@ -79,7 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Rutas para gestionar las categorias
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
   Route::get('/dashboard/categories', [
     CategoryController::class,
     'index',
@@ -108,6 +109,42 @@ Route::middleware(['auth', 'verified'])->group(function () {
     CategoryController::class,
     'destroy',
   ])->name('categories.destroy');
+});
+
+// Rutas para gestionar las presentaciones
+Route::middleware(['auth', 'verified', 'admin-speaker'])->group(function () {
+  Route::get('/dashboard/presentations', [
+    PresentationController::class,
+    'index',
+  ])->name('presentations.index');
+  Route::get('/dashboard/presentations/create/{user}', [
+    PresentationController::class,
+    'create',
+  ])
+    ->name('presentations.create')
+    ->middleware('owner-presentation-create');
+  Route::post('/dashboard/presentations/store/{user}', [
+    PresentationController::class,
+    'store',
+  ])->name('presentations.store');
+  Route::get('/dashboard/presentations/{presentation}', [
+    PresentationController::class,
+    'show',
+  ])->name('presentations.show');
+  Route::get('/dashboard/presentations/{presentation}/edit', [
+    PresentationController::class,
+    'edit',
+  ])
+    ->name('presentations.edit')
+    ->middleware('owner-presentation-edit');
+  Route::put('/dashboard/presentations/{presentation}', [
+    PresentationController::class,
+    'update',
+  ])->name('presentations.update');
+  Route::delete('/dashboard/presentations/{presentation}', [
+    PresentationController::class,
+    'destroy',
+  ])->name('presentations.destroy');
 });
 
 // Rutas para cambiar los datos del perfil de usuario

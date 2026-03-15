@@ -80,7 +80,7 @@
     <!-- Paginación centrado -->
     <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
         <p class="text-sm text-slate-400 order-2 md:order-1">
-            Mostrando {{ $sponsors->firstItem() }} - {{ $sponsors->lastItem() }} de {{ $sponsors->total() }} usuarios
+            Mostrando {{ $sponsors->firstItem() }} - {{ $sponsors->lastItem() }} de {{ $sponsors->total() }} patrocinadores
         </p>
 
         <nav class="flex gap-2 order-1 md:order-2">

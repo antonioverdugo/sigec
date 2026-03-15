@@ -17,9 +17,6 @@ class SponsorController extends Controller
    */
   public function index(): View
   {
-    // if (auth()->user()->role->id !== 3) {
-    //   return view('errors.access-denied');
-    // }
     $sponsors = Sponsor::with('type_sponsor')
       ->orderBy('created_at', 'desc')
       ->paginate(8);
@@ -42,7 +39,7 @@ class SponsorController extends Controller
    */
   public function store(CreateSponsorRequest $request): RedirectResponse
   {
-    // Crear el usuario
+    // Crear el patrocinador
     Sponsor::create([
       'name' => ucwords(strtolower($request->name)),
       'email' => $request->email,
@@ -84,19 +81,16 @@ class SponsorController extends Controller
   public function update(UpdateSponsorRequest $request, Sponsor $sponsor)
   {
     // Los datos se validad en UpdateSponsorRequest
-    $data = [
+    $sponsor->fill([
       'name' => ucwords(strtolower($request->name)),
+      'email' => $request->email,
       'phone' => $request->phone,
       'amount_contributed' => $request->amount_contributed,
       'type_sponsor_id' => $request->type_sponsor_id,
-    ];
-    // Si el email es distinto se actualiza ya que es unique
-    if ($request->email !== $sponsor->email) {
-      $data['email'] = $request->email;
-    }
+    ]);
 
     // Actualizar el patrocinador
-    Sponsor::where('id', $sponsor->id)->update($data);
+    $sponsor->save();
 
     // Redirigir a la lista de patrocinadores
     return redirect()

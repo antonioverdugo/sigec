@@ -15,9 +15,9 @@ class CategoriesSeeder extends Seeder
     // Crear categorías
     $categories = [
       [
-        'name' => 'Desarrollo Web',
+        'name' => 'General',
         'description' =>
-          'En esta categoria se incluiran ponencias relacionadas con frontend y backend',
+          'Esta categoria es la preestablecida si no se proporciona una categoria',
       ],
       [
         'name' => 'Ciberseguridad',

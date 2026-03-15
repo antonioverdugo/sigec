@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Presentation;
 
-class Category extends Model
+class TypePresentation extends Model
 {
-  // Atributos rellenables
+  // Atributos rellenales
   protected $fillable = ['name', 'description'];
 
   // Relacion con la tabla presentations
