@@ -14,20 +14,28 @@ use Illuminate\View\View;
 class UsersController extends Controller
 {
   /**
-   * Método para listar todos los usuarios
+   * Lista todos los usuarios de forma paginada.
+   *
+   * Recupera los usuarios con su rol relacionado,
+   * ordenados por fecha de creación descendente.
+   *
+   * @return View Vista con la lista de usuarios
    */
   public function index(): View
   {
-    // if (auth()->user()->role->id !== 3) {
-    //   return view('errors.access-denied');
-    // }
     $users = User::with('role')->orderBy('created_at', 'desc')->paginate(8);
 
     return view('dashboard.users.index', compact('users'));
   }
 
   /**
-   * Método para mostrar un usuario
+   * Muestra un usuario específico.
+   *
+   * Redirige al listado ya que la vista de detalle
+   * no está implementada actualmente.
+   *
+   * @param int $id ID del usuario a mostrar
+   * @return RedirectResponse Redirige a la lista de usuarios
    */
 
   public function show(int $id): RedirectResponse
@@ -36,7 +44,13 @@ class UsersController extends Controller
   }
 
   /**
-   * Método para mostrar vista para crear un usuario
+   * Muestra el formulario para crear un nuevo usuario.
+   *
+   * Recupera todos los roles disponibles para el selector
+   * del formulario de creación.
+   *
+   * @return View Vista con el formulario de creación
+   * @see Role
    */
   public function create(): View
   {
@@ -47,7 +61,15 @@ class UsersController extends Controller
   }
 
   /**
-   * Método para almacenar un usuario
+   * Almacena un nuevo usuario en el sistema.
+   *
+   * Valida los datos mediante CreateUserRequest.
+   * El nombre se formatea automáticamente a formato título.
+   * La contraseña se almacena hasheada.
+   *
+   * @param CreateUserRequest $request Datos validados del formulario
+   * @return RedirectResponse Redirige a la lista con mensaje de éxito
+   * @throws \Exception Si ocurre un error al crear el usuario
    */
   public function store(CreateUserRequest $request): RedirectResponse
   {
@@ -67,7 +89,16 @@ class UsersController extends Controller
   }
 
   /**
-   * Muestra el formulario para actualizar el usuario
+   * Muestra el formulario para editar un usuario existente.
+   *
+   * Recupera el usuario por su ID y los roles disponibles
+   * para el formulario de edición.
+   *
+   * @param int $idUser ID del usuario a editar
+   * @return View Vista con el formulario de edición
+   * @throws ModelNotFoundException Si el usuario no existe
+   * @see User
+   * @see Role
    */
   public function edit(int $idUser): View
   {
@@ -80,7 +111,16 @@ class UsersController extends Controller
   }
 
   /**
-   * Método para actualizar el usuario
+   * Actualiza los datos de un usuario existente.
+   *
+   * Valida los datos mediante UpdateUserRequest.
+   * Permite actualizar email y contraseña de forma opcional.
+   * Si se proporciona contraseña, se almacena hasheada.
+   *
+   * @param UpdateUserRequest $request Datos validados del formulario
+   * @param User $user Instancia del usuario a actualizar
+   * @return RedirectResponse Redirige a la lista con mensaje de éxito
+   * @throws ModelNotFoundException Si el usuario no existe
    */
   public function update(
     UpdateUserRequest $request,
@@ -113,7 +153,13 @@ class UsersController extends Controller
   }
 
   /**
-   * Eliminar el usuario correctamente
+   * Elimina un usuario del sistema.
+   *
+   * Realiza una eliminación lógica del usuario.
+   *
+   * @param User $user Instancia del usuario a eliminar
+   * @return RedirectResponse Redirige a la lista con mensaje de éxito
+   * @throws ModelNotFoundException Si el usuario no existe
    */
   public function destroy(User $user): RedirectResponse
   {
@@ -131,7 +177,14 @@ class UsersController extends Controller
   }
 
   /**
-   * Método para comprobar que existe el usuario
+   * Busca un usuario por su ID.
+   *
+   * Método auxiliar que utiliza findOrFail para
+   * devolver el usuario o lanzar excepción si no existe.
+   *
+   * @param int $id ID del usuario a buscar
+   * @return User El usuario encontrado
+   * @throws ModelNotFoundException Si el usuario no existe
    */
   private function findUser(int $id): User|ModelNotFoundException
   {
