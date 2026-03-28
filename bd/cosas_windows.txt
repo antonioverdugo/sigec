@@ -1,0 +1,7 @@
+instalar php 8.4
+instalar node 24.14
+composer install
+npm install
+eliminar link a public
+ejecutar php artisan storage:link
+ejecutar php artisan serve

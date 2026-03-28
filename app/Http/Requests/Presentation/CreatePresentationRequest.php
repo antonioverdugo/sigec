@@ -21,9 +21,16 @@ class CreatePresentationRequest extends FormRequest
    */
   public function rules(): array
   {
+    // Validar los datos
     return [
-      'title' => ['required', 'string', 'max:255', 'min:5'],
-      'summary' => ['required', 'string', 'max:450', 'min:5'],
+      'title' => [
+        'required',
+        'string',
+        'max:200',
+        'min:5',
+        'regex:/^[^\/\\:*?"<>|\x00]+$/',
+      ],
+      'summary' => ['required', 'string', 'max:350', 'min:5'],
       'category' => ['nullable', 'numeric', 'exists:categories,id'],
       'file' => [
         'required',
@@ -31,6 +38,13 @@ class CreatePresentationRequest extends FormRequest
         'mimes:pdf,ppt,pptx,key,odp',
         'max:1048000',
       ],
+    ];
+  }
+  public function messages(): array
+  {
+    return [
+      'title.regex' =>
+        'El título contiene caracteres no permitidos para nombres de archivo (no usar: / \ : * ? " < > |).',
     ];
   }
 }

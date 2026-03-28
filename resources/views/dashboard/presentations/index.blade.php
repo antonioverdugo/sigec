@@ -67,14 +67,35 @@
                         <!--Pintar las acciones de CRUD-->
                         <div class="flex items-center justify-end space-x-2">
                              <!-- <a class="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg"><i data-lucide="eye" class="w-4 h-4"></i></a> -->
+                             <!--Si el usuario es ponente puede editar y eliminar la ponencia -->
                             @if (Auth::user()->role->name === 'ponente')
+                                @if ($presentation->published)
+                                    <span class="text-xs text-green-400">Publicada</span>
+                                @else
+                                    <span class="text-xs text-red-400">No Publicada</span>
+                                @endif
+
                                 <a href="{{ route('presentations.edit', ['presentation' => $presentation]) }}" title="Editar Ponencia" class="p-2 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg"><i data-lucide="pencil" class="w-4 h-4"></i></a>
-                            @endif
-                            @if (Auth::user()->role->name === 'ponente')
                                 <form action="{{ route('presentations.destroy', [$presentation]) }}" method="POST" class="form-delete">
                                     @csrf
                                     @method('DELETE')
                                     <button title="Eliminar Ponencia" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                </form>
+                            @endif
+                            <!--Si el usuario es admin puede publicar y despublicar la ponencia -->
+                            @if (Auth::user()->role->name === 'admin')
+                                <form action="{{ route('presentations.publish', $presentation) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" title="{{ $presentation->published ? 'Despublicar' : 'Publicar' }}"
+                                        class="p-2 text-slate-400 hover:{{ $presentation->published ? 'text-red' : 'text-blue' }}-400 hover:bg-{{ $presentation->published ? 'red' : 'blue' }}-500/10 rounded-lg flex items-center gap-2">
+                                        <span class="text-xs">{{ $presentation->published ? 'Despublicar' : 'Publicar' }}</span>
+                                        @if($presentation->published)
+                                            <i data-lucide="eye-off" class="w-4 h-4"></i>
+                                        @else
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
+                                        @endif
+                                    </button>
                                 </form>
                             @endif
                         </div>

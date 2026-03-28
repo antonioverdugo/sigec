@@ -24,11 +24,12 @@ class UpdateSponsorRequest extends FormRequest
     $sponsorId = $this->sponsor?->id;
     return [
       // Validar los datos para crear un usuario
-      'name' => 'required|string|min:3|max:255',
+      'name' => 'required|string|min:3|max:200',
       'email' => [
         'required',
         'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
         'unique:sponsors,email,' . $sponsorId,
+        'max:200',
       ],
       'phone' => 'nullable|regex:/^[689]\d{8}$/',
       'amount_contributed' => [

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PosterController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\Tools\DashboardController;
 use App\Http\Controllers\UsersController;
+use App\Models\Poster;
 use Illuminate\Support\Facades\Route;
 
 // Ruta de inicio
@@ -117,12 +119,14 @@ Route::middleware(['auth', 'verified', 'admin-speaker'])->group(function () {
     PresentationController::class,
     'index',
   ])->name('presentations.index');
+  // Ruta para crear una presentación
   Route::get('/dashboard/presentations/create/{user}', [
     PresentationController::class,
     'create',
   ])
     ->name('presentations.create')
     ->middleware('owner-presentation-create');
+  // Ruta para almacenar una presentación
   Route::post('/dashboard/presentations/store/{user}', [
     PresentationController::class,
     'store',
@@ -145,7 +149,65 @@ Route::middleware(['auth', 'verified', 'admin-speaker'])->group(function () {
     PresentationController::class,
     'destroy',
   ])->name('presentations.destroy');
+
+  Route::put('/dashboard/presentations/publish/{presentation}', [
+    PresentationController::class,
+    'publish',
+  ])->name('presentations.publish');
 });
+
+// Rutas para gestionar los posters
+Route::middleware(['auth', 'verified', 'admin-speaker'])->group(function () {
+  Route::get('/dashboard/posters', [PosterController::class, 'index'])->name(
+    'posters.index',
+  );
+  // Ruta para crear un poster
+  Route::get('/dashboard/posters/create/{user}', [
+    PosterController::class,
+    'create',
+  ])
+    ->name('posters.create')
+    ->middleware('owner-poster-create');
+  // Ruta para almacenar un poster
+  Route::post('/dashboard/posters/store/{user}', [
+    PosterController::class,
+    'store',
+  ])->name('posters.store');
+  Route::get('/dashboard/posters/{poster}', [
+    PosterController::class,
+    'show',
+  ])->name('posters.show');
+  Route::get('/dashboard/posters/{poster}/edit', [
+    PosterController::class,
+    'edit',
+  ])
+    ->name('posters.edit')
+    ->middleware('owner-poster-edit');
+  Route::put('/dashboard/posters/{poster}', [
+    PosterController::class,
+    'update',
+  ])->name('posters.update');
+  Route::delete('/dashboard/posters/{poster}', [
+    PosterController::class,
+    'destroy',
+  ])->name('posters.destroy');
+  // Ruta para publicar un poster
+  Route::put('/dashboard/posters/publish/{poster}', [
+    PosterController::class,
+    'publish',
+  ])->name('posters.publish');
+});
+
+// Ruta publica para obtener los posters publicados y publicos
+Route::get('posters/public/', [PosterController::class, 'postersPublic'])->name(
+  'posters.public',
+);
+
+// Ruta para filtrar los posters
+Route::get('posters/public/search', [
+  PosterController::class,
+  'postersSearch',
+])->name('posters.search');
 
 // Rutas para cambiar los datos del perfil de usuario
 Route::middleware('auth')->group(function () {

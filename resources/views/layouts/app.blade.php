@@ -134,8 +134,8 @@
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Ponencias Orales</span>
                     </a>
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
+                    <a href="{{route('posters.index')}}"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('posters.index') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="scroll" class="w-5 h-5"></i>
                         <span>Posters Cientificos</span>
                     </a>
@@ -150,8 +150,8 @@
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Mis Ponencias Orales</span>
                     </a>
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ $inactiveLink }}">
+                    <a href="{{ route('posters.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('posters.index') ? $activeLink : $inactiveLink }}">
                         <i data-lucide="presentation" class="w-5 h-5"></i>
                         <span>Mis Poster Científicos</span>
                     </a>
@@ -160,7 +160,7 @@
 
             <!-- Bottom Actions -->
             <div class="p-4 border-t border-slate-800/50">
-                <a href="#"
+                <a href="{{ route('posters.public') }}"
                     class="w-full flex items-center justify-center space-x-2 px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 rounded-xl shadow-lg shadow-violet-600/20 transition-all active:scale-95">
                     <i data-lucide="scroll" class="w-4 h-4"></i>
                     <span>Posters Científicos</span>

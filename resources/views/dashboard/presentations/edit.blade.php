@@ -59,7 +59,7 @@
                         <option value="" class="bg-slate-800" disabled selected>Selecciona una categoria</option>
 
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" class="bg-slate-800" {{ old('category', $category->id) == $presentation->category_id ? 'selected' : '' }}>{{ ucwords($category->name) }}</option>
+                            <option value="{{ $category->id }}" class="bg-slate-800" {{ old('category', $presentation->category_id) ==  $category->id ? 'selected' : '' }}>{{ ucwords($category->name) }}</option>
                         @endforeach
                     </select>
                     @error('category')

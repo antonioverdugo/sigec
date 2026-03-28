@@ -23,7 +23,7 @@ class CreateCategoryRequest extends FormRequest
   {
     return [
       // Validar los datos para crear una categoria
-      'name' => 'required|string|min:3|max:255',
+      'name' => 'required|string|min:3|max:200',
       'description' => 'required|string|min:3',
     ];
   }

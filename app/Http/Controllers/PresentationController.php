@@ -37,7 +37,7 @@ class PresentationController extends Controller
   /**
    * Mostrar el formulario para crear una nueva presentación
    */
-  public function create(User $user): View|RedirectResponse
+  public function create(User $user): View
   {
     $categories = Category::get();
 
@@ -110,7 +110,7 @@ class PresentationController extends Controller
   public function update(
     UpdatePresentationRequest $request,
     Presentation $presentation,
-  ) {
+  ): RedirectResponse {
     // Datos de la actualización
     $data = [
       'title' => $request->title,
@@ -154,7 +154,7 @@ class PresentationController extends Controller
   /**
    * Eliminar una presentación
    */
-  public function destroy(Presentation $presentation)
+  public function destroy(Presentation $presentation): RedirectResponse
   {
     // Comprobar que existe la presentación
     $this->findPresentation($presentation->id);
@@ -170,6 +170,30 @@ class PresentationController extends Controller
       ->route('presentations.index')
       ->with('message', 'Ponencia eliminada correctamente')
       ->with('icon', 'success');
+  }
+
+  /**
+   * Método para publicar o despublicar una presentación
+   */
+  public function publish(Presentation $presentation): RedirectResponse
+  {
+    if ($presentation->published) {
+      Presentation::where('id', $presentation->id)->update([
+        'published' => false,
+      ]);
+      return redirect()
+        ->route('presentations.index')
+        ->with('message', 'Ponencia despublicada correctamente')
+        ->with('icon', 'success');
+    } else {
+      Presentation::where('id', $presentation->id)->update([
+        'published' => true,
+      ]);
+      return redirect()
+        ->route('presentations.index')
+        ->with('message', 'Ponencia publicada correctamente')
+        ->with('icon', 'success');
+    }
   }
 
   /**
@@ -221,7 +245,7 @@ class PresentationController extends Controller
     return $fileName =
       $userId .
       '-' .
-      date('Y-m-d H:i:s-', time()) .
+      date('Y-m-d H.i.s-', time()) .
       $request->title .
       '.' .
       $extension;
@@ -256,7 +280,7 @@ class PresentationController extends Controller
     Storage::disk('public')->delete($path);
   }
   /**
-   * Método para cambiar el nombre a la ponencia
+   * Método para cambiar el nombre del archivo de la ponencia al actualizar
    */
   private function changeFileName(
     Presentation $presentation,
