@@ -4,10 +4,23 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request para crear un usuario.
+ *
+ * Valida los datos de entrada al registrar un nuevo usuario
+ * en el sistema, incluyendo nombre, correo, contraseña y rol.
+ *
+ * @package App\Http\Requests\User
+ *
+ * @property string $name Nombre del usuario
+ * @property string $email Correo electrónico del usuario
+ * @property string $password Contraseña del usuario
+ * @property int $role_id ID del rol asignado
+ */
 class CreateUserRequest extends FormRequest
 {
   /**
-   * Determine if the user is authorized to make this request.
+   * Determina si el usuario está autorizado para realizar esta request.
    */
   public function authorize(): bool
   {
@@ -15,7 +28,12 @@ class CreateUserRequest extends FormRequest
   }
 
   /**
-   * Get the validation rules that apply to the request.
+   * Reglas de validación para crear un usuario.
+   *
+   * - name: obligatorio, texto, entre 3 y 255 caracteres
+   * - email: obligatorio, formato válido de correo, único en users
+   * - password: obligatorio, texto, mínimo 8 caracteres
+   * - role_id: obligatorio, debe existir en la tabla roles
    *
    * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
    */

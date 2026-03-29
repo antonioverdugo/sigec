@@ -4,10 +4,23 @@ namespace App\Http\Requests\Poster;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request para actualizar un póster.
+ *
+ * Valida los datos de entrada al modificar un póster
+ * existente en el sistema, incluyendo título, resumen, categoría y archivo PDF.
+ *
+ * @package App\Http\Requests\Poster
+ *
+ * @property string $title Título del póster
+ * @property string $summary Resumen o abstract del póster
+ * @property int|null $category ID de la categoría (opcional)
+ * @property \Illuminate\Http\File|null $file Archivo PDF del póster (opcional)
+ */
 class UpdatePosterRequest extends FormRequest
 {
   /**
-   * Determine if the user is authorized to make this request.
+   * Determina si el usuario está autorizado para realizar esta request.
    */
   public function authorize(): bool
   {
@@ -15,7 +28,12 @@ class UpdatePosterRequest extends FormRequest
   }
 
   /**
-   * Get the validation rules that apply to the request.
+   * Reglas de validación para actualizar un póster.
+   *
+   * - title: obligatorio, texto, entre 5 y 200 caracteres, sin caracteres especiales
+   * - summary: obligatorio, texto, entre 5 y 350 caracteres
+   * - category: opcional, numérico, debe existir en la tabla categories
+   * - file: opcional, archivo PDF, máximo 1MB
    *
    * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
    */
@@ -34,6 +52,12 @@ class UpdatePosterRequest extends FormRequest
       'file' => ['nullable', 'file', 'mimes:pdf', 'max:1048000'],
     ];
   }
+
+  /**
+   * Mensajes de error personalizados para cada regla.
+   *
+   * @return array<string, string>
+   */
   public function messages(): array
   {
     return [

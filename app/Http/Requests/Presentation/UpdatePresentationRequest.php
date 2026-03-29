@@ -4,10 +4,23 @@ namespace App\Http\Requests\Presentation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request para actualizar una presentación.
+ *
+ * Valida los datos de entrada al modificar una presentación
+ * existente en el sistema, incluyendo título, resumen, categoría y archivo multimedia.
+ *
+ * @package App\Http\Requests\Presentation
+ *
+ * @property string $title Título de la presentación
+ * @property string $summary Resumen o abstract de la presentación
+ * @property int|null $category ID de la categoría (opcional)
+ * @property \Illuminate\Http\File|null $file Archivo de presentación (PDF, PPT, PPTX, KEY, ODP) (opcional)
+ */
 class UpdatePresentationRequest extends FormRequest
 {
   /**
-   * Determine if the user is authorized to make this request.
+   * Determina si el usuario está autorizado para realizar esta request.
    */
   public function authorize(): bool
   {
@@ -15,7 +28,12 @@ class UpdatePresentationRequest extends FormRequest
   }
 
   /**
-   * Get the validation rules that apply to the request.
+   * Reglas de validación para actualizar una presentación.
+   *
+   * - title: obligatorio, texto, entre 5 y 200 caracteres, sin caracteres especiales
+   * - summary: obligatorio, texto, entre 5 y 350 caracteres
+   * - category: opcional, numérico, debe existir en la tabla categories
+   * - file: opcional, archivo (PDF, PPT, PPTX, KEY, ODP), máximo 1MB
    *
    * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
    */
@@ -39,6 +57,12 @@ class UpdatePresentationRequest extends FormRequest
       ],
     ];
   }
+
+  /**
+   * Mensajes de error personalizados para cada regla.
+   *
+   * @return array<string, string>
+   */
   public function messages(): array
   {
     return [

@@ -4,10 +4,23 @@ namespace App\Http\Requests\Poster;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Request para crear un póster.
+ *
+ * Valida los datos de entrada al registrar un nuevo póster
+ * en el sistema, incluyendo título, resumen, categoría y archivo PDF.
+ *
+ * @package App\Http\Requests\Poster
+ *
+ * @property string $title Título del póster
+ * @property string $summary Resumen o abstract del póster
+ * @property int|null $category ID de la categoría (opcional)
+ * @property \Illuminate\Http\File $file Archivo PDF del póster
+ */
 class CreatePosterRequest extends FormRequest
 {
   /**
-   * Determine if the user is authorized to make this request.
+   * Determina si el usuario está autorizado para realizar esta request.
    */
   public function authorize(): bool
   {
@@ -15,7 +28,12 @@ class CreatePosterRequest extends FormRequest
   }
 
   /**
-   * Get the validation rules that apply to the request.
+   * Reglas de validación para crear un póster.
+   *
+   * - title: obligatorio, texto, entre 5 y 200 caracteres, sin caracteres especiales
+   * - summary: obligatorio, texto, entre 5 y 350 caracteres
+   * - category: opcional, numérico, debe existir en la tabla categories
+   * - file: obligatorio, archivo PDF, máximo 1MB
    *
    * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
    */
@@ -35,6 +53,12 @@ class CreatePosterRequest extends FormRequest
       'file' => ['required', 'file', 'mimes:pdf', 'max:1048000'],
     ];
   }
+
+  /**
+   * Mensajes de error personalizados para cada regla.
+   *
+   * @return array<string, string>
+   */
   public function messages(): array
   {
     return [
