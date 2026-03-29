@@ -12,10 +12,20 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+/**
+ * Controlador para registro de nuevos usuarios.
+ *
+ * Maneja el proceso de registro de usuarios en el sistema,
+ * incluyendo validación, creación de cuenta y autenticación automática.
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class RegisteredUserController extends Controller
 {
   /**
-   * Display the registration view.
+   * Muestra la vista de registro.
+   *
+   * @return View Vista del formulario de registro.
    */
   public function create(): View
   {
@@ -23,7 +33,14 @@ class RegisteredUserController extends Controller
   }
 
   /**
-   * Handle an incoming registration request.
+   * Procesa la solicitud de registro.
+   *
+   * Valida los datos del nuevo usuario, crea la cuenta,
+   * dispara el evento de registro y autentica al usuario.
+   *
+   * @param  Request  $request
+   *
+   * @return RedirectResponse Redirige al dashboard.
    *
    * @throws \Illuminate\Validation\ValidationException
    */
