@@ -25,18 +25,19 @@
 
 - PHP 8.2+
 - Composer
-- Laravel 11.x
-- Base de datos MySQL/PostgreSQL
+- Laravel 12.x
+- Base de datos MySQL/PostgreSQL/Sqlite
 
 ## Instalación
 
 ```bash
 # Clonar el repositorio
-git clone <repository-url>
+git clone https://github.com/antonioverdugo/sigec.git
 cd sigec
 
 # Instalar dependencias
 composer install
+npm install
 
 # Copiar archivo de configuración
 cp .env.example .env
@@ -85,9 +86,9 @@ php artisan serve
 
 ## Tecnologías
 
-- **Backend:** Laravel 11, PHP 8.2+
+- **Backend:** Laravel 12, PHP 8.2+
 - **Frontend:** Blade Templates, Tailwind CSS
-- **Base de datos:** MySQL/PostgreSQL con Eloquent ORM
+- **Base de datos:** MySQL/PostgreSQL/Sqlite con Eloquent ORM
 - **Autenticación:** Laravel Breeze
 
 ## Licencia
