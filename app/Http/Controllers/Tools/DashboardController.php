@@ -8,6 +8,16 @@ use App\Models\Presentation;
 use App\Models\Sponsor;
 use Illuminate\View\View;
 
+/**
+ * Muestra el panel de administración con estadísticas del sistema.
+ *
+ * Recopila y retorna conteos de usuarios, presentaciones,
+ * pósters y patrocinadores para ser mostrados en el dashboard.
+ *
+ * @return View Vista del dashboard con las estadísticas.
+ *
+ * @example GET /dashboard
+ */
 class DashboardController extends Controller
 {
   public function index(): View

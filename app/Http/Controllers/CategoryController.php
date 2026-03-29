@@ -9,6 +9,14 @@ use Illuminate\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 
+/**
+ * Controlador para la gestión de categorías.
+ *
+ * Maneja las operaciones CRUD (Crear, Leer, Actualizar, Eliminar)
+ * de categorías en el panel de administración.
+ *
+ * @package App\Http\Controllers
+ */
 class CategoryController extends Controller
 {
   /**
@@ -16,13 +24,28 @@ class CategoryController extends Controller
    */
   public function index(): View
   {
-    // Obtener todas las categorías
+    /**
+     * Muestra una lista paginada de categorías.
+     *
+     * Recupera todas las categorías con paginación de 8 elementos
+     * por página para mostrarlas en la vista del dashboard.
+     *
+     * @return View Vista con la lista de categorías.
+     *
+     * @example GET /categories
+     */
     $categories = Category::paginate(8);
     return view('dashboard.categories.index', compact('categories'));
   }
 
   /**
-   * Mostrar el formulario para crear una nueva categoría
+   * Muestra el formulario para crear una nueva categoría.
+   *
+   * Retorna la vista con el formulario de creación de categorías.
+   *
+   * @return View Vista del formulario de creación.
+   *
+   * @example GET /categories/create
    */
   public function create(): View
   {
@@ -31,7 +54,15 @@ class CategoryController extends Controller
   }
 
   /**
-   * Guardar una nueva categoría
+   * Guarda una nueva categoría en la base de datos.
+   *
+   * Valida los datos del request, normaliza el nombre (capitaliza
+   * la primera letra de cada palabra) y crea la categoría.
+   *
+   * @param CreateCategoryRequest $request Datos validados del formulario.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example POST /categories
    */
   public function store(CreateCategoryRequest $request): RedirectResponse
   {
@@ -49,16 +80,31 @@ class CategoryController extends Controller
   }
 
   /**
-   * Mostrar una categoría específica
+   * Guarda una nueva categoría en la base de datos.
+   *
+   * Valida los datos del request, normaliza el nombre (capitaliza
+   * la primera letra de cada palabra) y crea la categoría.
+   *
+   * @param CreateCategoryRequest $request Datos validados del formulario.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example POST /categories
    */
   public function show(Category $category): RedirectResponse
   {
-    // Como no es necesaria este metodo voy a redirigira a la lista de categorias
     return redirect()->route('categories.index');
   }
 
   /**
-   * Mostrar el formulario para editar una categoría
+   * Muestra los detalles de una categoría específica.
+   *
+   * Redirige a la lista de categorías ya que esta vista
+   * no es necesaria en el sistema actual.
+   *
+   * @param Category $category Categoría a mostrar.
+   * @return RedirectResponse Redirección a la lista de categorías.
+   *
+   * @example GET /categories/{category}
    */
   public function edit(Category $category): View|RedirectResponse
   {
@@ -73,7 +119,16 @@ class CategoryController extends Controller
   }
 
   /**
-   * Actualizar una categoría existente
+   * Actualiza una categoría existente.
+   *
+   * Valida los datos del request, normaliza el nombre y
+   * actualiza la categoría en la base de datos.
+   *
+   * @param UpdateCategoryRequest $request Datos validados del formulario.
+   * @param Category $category Categoría a actualizar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example PUT /categories/{category}
    */
   public function update(UpdateCategoryRequest $request, Category $category)
   {
@@ -92,7 +147,15 @@ class CategoryController extends Controller
   }
 
   /**
-   * Eliminar una categoría existente
+   * Elimina una categoría existente.
+   *
+   * Verifica que la categoría exista y la elimina de la
+   * base de datos.
+   *
+   * @param Category $category Categoría a eliminar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example DELETE /categories/{category}
    */
   public function destroy(Category $category)
   {
@@ -108,7 +171,14 @@ class CategoryController extends Controller
   }
 
   /**
-   * Método para comprobar que existe una categoría
+   * Busca una categoría por su ID.
+   *
+   * Utiliza findOrFail para lanzar excepción si no se encuentra.
+   *
+   * @param int $id ID de la categoría a buscar.
+   * @return Category|ModelNotFoundException Categoría encontrada.
+   *
+   * @throws ModelNotFoundException Si la categoría no existe.
    */
   public function findCategory(int $id): Category|ModelNotFoundException
   {

@@ -10,10 +10,27 @@ use Illuminate\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\TypeSponsor;
 
+/**
+ * Controlador para la gestión de patrocinadores.
+ *
+ * Maneja las operaciones CRUD de patrocinadores incluyendo
+ * creación, edición, eliminación y listado de sponsors
+ * con sus tipos correspondientes.
+ *
+ * @package App\Http\Controllers
+ */
 class SponsorController extends Controller
 {
   /**
-   * Método que lista todos los patrocinadores
+   * Lista todos los patrocinadores.
+   *
+   * Recupera los patrocinadores ordenados por fecha de
+   * creación (más recientes primero) con su tipo
+   * asociado, paginados de 8 en 8.
+   *
+   * @return View Vista con la lista de patrocinadores.
+   *
+   * @example GET /sponsors
    */
   public function index(): View
   {
@@ -24,7 +41,14 @@ class SponsorController extends Controller
   }
 
   /**
-   * Método que muestra la vista para crear un patrocinador
+   * Muestra el formulario para crear un patrocinador.
+   *
+   * Recupera todos los tipos de patrocinador disponibles
+   * para el formulario de creación.
+   *
+   * @return View Vista del formulario de creación.
+   *
+   * @example GET /sponsors/create
    */
   public function create(): View
   {
@@ -35,7 +59,15 @@ class SponsorController extends Controller
   }
 
   /**
-   * Método que guarda un patrocinador
+   * Guarda un nuevo patrocinador.
+   *
+   * Normaliza el nombre (capitaliza cada palabra),
+   * valida los datos y crea el patrocinador.
+   *
+   * @param CreateSponsorRequest $request Datos validados del formulario.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example POST /sponsors
    */
   public function store(CreateSponsorRequest $request): RedirectResponse
   {
@@ -56,7 +88,15 @@ class SponsorController extends Controller
   }
 
   /**
-   * Método que muestra los datos de un patrocinador
+   * Muestra los detalles de un patrocinador.
+   *
+   * Redirige a la lista de patrocinadores ya que esta
+   * vista no es necesaria en el sistema actual.
+   *
+   * @param Sponsor $sponsor Patrocinador a mostrar.
+   * @return RedirectResponse Redirección a la lista de patrocinadores.
+   *
+   * @example GET /sponsors/{sponsor}
    */
   public function show(Sponsor $sponsor): RedirectResponse
   {
@@ -64,7 +104,15 @@ class SponsorController extends Controller
   }
 
   /**
-   * Método que muestra la vista para actualizar un patrocinador
+   * Muestra el formulario para editar un patrocinador.
+   *
+   * Verifica que el patrocinador exista y recupera
+   * los tipos de patrocinador disponibles.
+   *
+   * @param int $id ID del patrocinador a editar.
+   * @return View Vista del formulario de edición.
+   *
+   * @example GET /sponsors/{id}/edit
    */
   public function edit(int $id): View
   {
@@ -76,7 +124,16 @@ class SponsorController extends Controller
   }
 
   /**
-   * Método que actualiza en la bd los datos del patrocinador
+   * Actualiza un patrocinador existente.
+   *
+   * Valida los datos del request, normaliza el nombre
+   * y actualiza el patrocinador en la base de datos.
+   *
+   * @param UpdateSponsorRequest $request Datos validados del formulario.
+   * @param Sponsor $sponsor Patrocinador a actualizar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example PUT /sponsors/{sponsor}
    */
   public function update(UpdateSponsorRequest $request, Sponsor $sponsor)
   {
@@ -100,7 +157,15 @@ class SponsorController extends Controller
   }
 
   /**
-   * Método para eliminar un patrocinador
+   * Elimina un patrocinador existente.
+   *
+   * Verifica que el patrocinador exista y lo
+   * elimina de la base de datos.
+   *
+   * @param Sponsor $sponsor Patrocinador a eliminar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example DELETE /sponsors/{sponsor}
    */
   public function destroy(Sponsor $sponsor): RedirectResponse
   {
@@ -116,8 +181,14 @@ class SponsorController extends Controller
       ->with('message', 'Patrocinador eliminado correctamente')
       ->with('icon', 'success');
   }
+
   /**
-   * Método para comprobar que existe el patrocinador
+   * Busca un patrocinador por su ID.
+   *
+   * @param int $id ID del patrocinador a buscar.
+   * @return Sponsor|ModelNotFoundException Patrocinador encontrado.
+   *
+   * @throws ModelNotFoundException Si el patrocinador no existe.
    */
   private function findSponsor(int $id): Sponsor|ModelNotFoundException
   {

@@ -17,7 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 class PresentationController extends Controller
 {
   /**
-   * Listar todas las presentaciones
+   * Controlador para la gestión de presentaciones (ponencias).
+   *
+   * Maneja las operaciones CRUD de presentaciones, incluyendo
+   * creación, edición, eliminación, publicación y manejo de
+   * archivos (PDF, PowerPoint, Keynote).
+   *
+   * @package App\Http\Controllers
    */
   public function index(): View
   {
@@ -35,7 +41,14 @@ class PresentationController extends Controller
   }
 
   /**
-   * Mostrar el formulario para crear una nueva presentación
+   * Muestra el formulario para crear una nueva presentación.
+   *
+   * Recupera las categorías disponibles para el formulario.
+   *
+   * @param User $user Usuario autenticado.
+   * @return View Vista del formulario de creación.
+   *
+   * @example GET /presentations/create
    */
   public function create(User $user): View
   {
@@ -48,7 +61,17 @@ class PresentationController extends Controller
   }
 
   /**
-   * Guardar una nueva presentación
+   * Guarda una nueva presentación en la base de datos.
+   *
+   * Valida los datos del request, asigna la categoría por
+   * defecto si no se selecciona, determina el tipo de archivo
+   * y guarda el archivo en storage.
+   *
+   * @param CreatePresentationRequest $request Datos validados del formulario.
+   * @param User $user Usuario autenticado.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example POST /presentations
    */
   public function store(CreatePresentationRequest $request, User $user)
   {
@@ -83,7 +106,13 @@ class PresentationController extends Controller
   }
 
   /**
-   * Ver una presentación
+   * Muestra los detalles de una presentación específica.
+   *
+   * Método reservado para uso futuro.
+   *
+   * @param Presentation $presentation Presentación a mostrar.
+   *
+   * @example GET /presentations/{presentation}
    */
   public function show(Presentation $presentation)
   {
@@ -91,7 +120,15 @@ class PresentationController extends Controller
   }
 
   /**
-   * Mostrar el formulario para editar una presentación
+   * Muestra el formulario para editar una presentación.
+   *
+   * Recupera las categorías disponibles para el formulario
+   * de edición.
+   *
+   * @param Presentation $presentation Presentación a editar.
+   * @return View Vista del formulario de edición.
+   *
+   * @example GET /presentations/{presentation}/edit
    */
   public function edit(Presentation $presentation): View
   {
@@ -105,7 +142,17 @@ class PresentationController extends Controller
   }
 
   /**
-   * Actualizar una presentación
+   * Actualiza una presentación existente.
+   *
+   * Valida los datos del request, actualiza los campos de
+   * texto y el archivo si se proporciona uno nuevo. Detecta
+   * el tipo de archivo y actualiza el nombre si cambia el título.
+   *
+   * @param UpdatePresentationRequest $request Datos validados del formulario.
+   * @param Presentation $presentation Presentación a actualizar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example PUT /presentations/{presentation}
    */
   public function update(
     UpdatePresentationRequest $request,
@@ -152,7 +199,15 @@ class PresentationController extends Controller
   }
 
   /**
-   * Eliminar una presentación
+   * Elimina una presentación y su archivo asociado.
+   *
+   * Verifica que la presentación exista, la elimina de la
+   * base de datos y elimina el archivo del storage.
+   *
+   * @param Presentation $presentation Presentación a eliminar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example DELETE /presentations/{presentation}
    */
   public function destroy(Presentation $presentation): RedirectResponse
   {
@@ -173,7 +228,14 @@ class PresentationController extends Controller
   }
 
   /**
-   * Método para publicar o despublicar una presentación
+   * Publica o despublica una presentación.
+   *
+   * Cambia el estado 'published' de la presentación.
+   *
+   * @param Presentation $presentation Presentación a publicar/despublicar.
+   * @return RedirectResponse Redirección con mensaje de resultado.
+   *
+   * @example POST /presentations/{presentation}/publish
    */
   public function publish(Presentation $presentation): RedirectResponse
   {
@@ -197,7 +259,12 @@ class PresentationController extends Controller
   }
 
   /**
-   * Método para comprobar que existe el ponencia
+   * Busca una presentación por su ID.
+   *
+   * @param int $id ID de la presentación a buscar.
+   * @return Presentation|ModelNotFoundException Presentación encontrada.
+   *
+   * @throws ModelNotFoundException Si la presentación no existe.
    */
   private function findPresentation(
     int $id,
@@ -206,7 +273,16 @@ class PresentationController extends Controller
   }
 
   /**
-   * Método para comprobar el tipo de archivo de la ponencia
+   * Determina el tipo de archivo de la presentación.
+   *
+   * Clasifica el archivo según su extensión en:
+   * - PDF
+   * - POWERPOINT (ppt, pptx)
+   * - OPEN DOCUMENT (odp)
+   * - KEYNOTE (por defecto)
+   *
+   * @param string $fileExtension Extensión del archivo.
+   * @return string Tipo de presentación en mayúsculas.
    */
   private function typePresentation(string $fileExtension): string
   {
@@ -222,8 +298,15 @@ class PresentationController extends Controller
 
     return $type;
   }
+
   /**
-   * Método para obtener el nombre de la ponencia
+   * Genera un nombre único para el archivo de la presentación.
+   *
+   * Formato: {userId}-{fecha}-{titulo}.{extension}
+   *
+   * @param Presentation|User $element Presentación o usuario para obtener el ID.
+   * @param Request $request Request con el título y archivo.
+   * @return string Nombre del archivo generado.
    */
   private function getFileName(
     Presentation|User $element,
@@ -250,8 +333,16 @@ class PresentationController extends Controller
       '.' .
       $extension;
   }
+
   /**
-   * Método para guardar el archivo
+   * Guarda el archivo de la presentación.
+   *
+   * Crea el directorio si no existe y guarda el archivo
+   * en storage/app/public/presentations/{userId-userName}/.
+   *
+   * @param Presentation|User $element Presentación o usuario.
+   * @param Request $request Request con el archivo.
+   * @return string Ruta relativa donde se guardó el archivo.
    */
   private function saveFile(
     Presentation|User $element,
@@ -272,15 +363,25 @@ class PresentationController extends Controller
   }
 
   /**
-   * Método para eliminar la ponencia
+   * Elimina el archivo anterior de la presentación.
+   *
+   * @param string $url URL completa del archivo a eliminar.
    */
   private function deletePreviusFile(string $url)
   {
     $path = str_replace('/storage/', '', $url);
     Storage::disk('public')->delete($path);
   }
+
   /**
-   * Método para cambiar el nombre del archivo de la ponencia al actualizar
+   * Cambia el nombre del archivo al actualizar la presentación.
+   *
+   * Renombra el archivo existente manteniendo la misma
+   * ubicación pero con el nuevo título.
+   *
+   * @param Presentation $presentation Presentación con el archivo actual.
+   * @param Request $request Request con el nuevo título.
+   * @return string Nueva ruta del archivo para la BD.
    */
   private function changeFileName(
     Presentation $presentation,

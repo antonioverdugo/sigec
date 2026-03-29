@@ -14,10 +14,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
+/**
+ * Controlador para la gestión de pósters.
+ *
+ * Maneja las operaciones CRUD de pósters, incluyendo creación,
+ * edición, eliminación, publicación y búsqueda. Los usuarios
+ * admin pueden ver todos los pósters mientras que los demás
+ * solo ven los suyos propios.
+ *
+ * @package App\Http\Controllers
+ */
 class PosterController extends Controller
 {
   /**
-   * Listar los posters según el rol del usuario.
+   * Lista los pósters según el rol del usuario.
+   *
+   * Si el usuario es admin, muestra todos los pósters.
+   * De lo contrario, muestra solo los pósters del usuario
+   * autenticado.
+   *
+   * @return View Vista con la lista de pósters.
+   *
+   * @example GET /posters
    */
   public function index(): View
   {
@@ -34,7 +52,15 @@ class PosterController extends Controller
   }
 
   /**
-   * Mostrar el formulario para crear un nuevo poster.
+   * Muestra el formulario para crear un nuevo póster.
+   *
+   * Recupera las categorías disponibles para el formulario
+   * de creación.
+   *
+   * @param User $user Usuario autenticado.
+   * @return View Vista del formulario de creación.
+   *
+   * @example GET /posters/create
    */
   public function create(User $user): View
   {
@@ -45,7 +71,17 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para almacenar un nuevo poster en la base de datos.
+   * Guarda un nuevo póster en la base de datos.
+   *
+   * Valida los datos del request, asigna la categoría por
+   * defecto si no se selecciona ninguna, guarda el archivo
+   * PDF y crea el póster.
+   *
+   * @param CreatePosterRequest $request Datos validados del formulario.
+   * @param User $user Usuario autenticado.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example POST /posters
    */
   public function store(
     CreatePosterRequest $request,
@@ -81,12 +117,26 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para mostrar un poster específico.
+   * Muestra los detalles de un póster específico.
+   *
+   * Método vacío reservado para uso futuro.
+   *
+   * @param Poster $poster Póster a mostrar.
+   *
+   * @example GET /posters/{poster}
    */
   public function show(Poster $poster) {}
 
   /**
-   * Método para mostrar el formulario de edición de un poster.
+   * Muestra el formulario para editar un póster.
+   *
+   * Recupera las categorías disponibles y retorna la
+   * vista de edición con los datos del póster.
+   *
+   * @param Poster $poster Póster a editar.
+   * @return View Vista del formulario de edición.
+   *
+   * @example GET /posters/{poster}/edit
    */
   public function edit(Poster $poster): View
   {
@@ -98,7 +148,17 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para actualizar un poster en la base de datos.
+   * Actualiza un póster existente.
+   *
+   * Valida los datos del request, actualiza los campos
+   * de texto y el archivo si se proporciona uno nuevo.
+   * Elimina el archivo anterior si se sube uno nuevo.
+   *
+   * @param UpdatePosterRequest $request Datos validados del formulario.
+   * @param Poster $poster Póster a actualizar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example PUT /posters/{poster}
    */
   public function update(
     UpdatePosterRequest $request,
@@ -143,7 +203,15 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para eliminar un poster de la base de datos.
+   * Elimina un póster y su archivo asociado.
+   *
+   * Verifica que el póster exista, lo elimina de la
+   * base de datos y elimina el archivo PDF del storage.
+   *
+   * @param Poster $poster Póster a eliminar.
+   * @return RedirectResponse Redirección a la lista con mensaje de éxito.
+   *
+   * @example DELETE /posters/{poster}
    */
   public function destroy(Poster $poster)
   {
@@ -163,7 +231,14 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para filtrar los posters que han sido publicados
+   * Muestra los pósters publicados públicamente.
+   *
+   * Filtra y muestra solo los pósters con estado publicado,
+   * junto con las categorías disponibles para filtrado.
+   *
+   * @return View Vista pública de pósters.
+   *
+   * @example GET /posters/public
    */
   public function postersPublic(): View
   {
@@ -173,7 +248,15 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para filtrar los posters
+   * Busca y filtra pósters según criterios.
+   *
+   * Permite filtrar por título (búsqueda parcial) y/o
+   * categoría. Retorna resultados paginados.
+   *
+   * @param Request $request Datos de búsqueda con 'title' y 'category'.
+   * @return View Vista con los pósters filtrados.
+   *
+   * @example GET /posters/search?title=...&category=...
    */
   public function postersSearch(Request $request): View
   {
@@ -197,7 +280,12 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para comprobar que existe el poster
+   * Busca un póster por su ID.
+   *
+   * @param int $id ID del póster a buscar.
+   * @return Poster|ModelNotFoundException Póster encontrado.
+   *
+   * @throws ModelNotFoundException Si el póster no existe.
    */
   private function findPresentation(int $id): Poster|ModelNotFoundException
   {
@@ -205,7 +293,13 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para obtener el nombre del poster
+   * Genera un nombre único para el archivo del póster.
+   *
+   * Formato: {userId}-{fecha}-titulo.pdf
+   *
+   * @param Poster|User $element Póster o usuario para obtener el ID.
+   * @param Request $request Request con el título del póster.
+   * @return string Nombre del archivo generado.
    */
   private function getFileName(Poster|User $element, Request $request): string
   {
@@ -223,7 +317,14 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para guardar el archivo
+   * Guarda el archivo PDF del póster.
+   *
+   * Crea el directorio si no existe y guarda el archivo
+   * en storage/app/public/posters/{userId-userName}/.
+   *
+   * @param Poster|User $element Póster o usuario.
+   * @param Request $request Request con el archivo.
+   * @return string Ruta relativa donde se guardó el archivo.
    */
   private function saveFile(Poster|User $element, Request $request): string
   {
@@ -242,7 +343,15 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para publicar o despublicar una presentación
+   * Publica o despublica un póster.
+   *
+   * Cambia el estado 'published' del póster. Si está
+   * publicado lo despublica y viceversa.
+   *
+   * @param Poster $poster Póster a publicar/despublicar.
+   * @return RedirectResponse Redirección con mensaje de resultado.
+   *
+   * @example POST /posters/{poster}/publish
    */
   public function publish(Poster $poster)
   {
@@ -268,7 +377,11 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para eliminar el poster anterior
+   * Elimina el archivo anterior del póster.
+   *
+   * @param string $url URL completa del archivo a eliminar.
+   *
+   * @example Uso interno en update()
    */
   private function deletePreviusFile(string $url)
   {
@@ -277,7 +390,14 @@ class PosterController extends Controller
   }
 
   /**
-   * Método para cambiar el nombre del archivo de la ponencia al actualizar
+   * Cambia el nombre del archivo al actualizar el póster.
+   *
+   * Renombra el archivo existente manteniendo la misma
+   * ubicación pero con el nuevo nombre generado.
+   *
+   * @param Poster $poster Póster con el archivo actual.
+   * @param Request $request Request con el nuevo título.
+   * @return string Nueva ruta del archivo para la BD.
    */
   private function changeFileName(Poster $poster, Request $request): string
   {
