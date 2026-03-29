@@ -7,12 +7,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Maneja una petición entrante.
+ *
+ * Obtiene el póster de la ruta y verifica que el usuario autenticado
+ * sea el propietario del mismo. Si no es ponente o no es propietario,
+ * redirige a 'posters.index'.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+ *
+ * @return \Symfony\Component\HttpFoundation\Response
+ */
 class IsOwnerPosterEdit
 {
   /**
-   * Handle an incoming request.
+   * Maneja una petición entrante.
    *
+   * Obtiene el póster de la ruta y verifica que el usuario autenticado
+   * sea el propietario del mismo. Si no es ponente o no es propietario,
+   * redirige a 'posters.index'.
+   *
+   * @param  \Illuminate\Http\Request  $request
    * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
    */
   public function handle(Request $request, Closure $next): Response
   {
