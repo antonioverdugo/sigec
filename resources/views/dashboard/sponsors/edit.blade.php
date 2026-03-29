@@ -69,7 +69,6 @@
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
-
                 <!-- Tipo de patrocinador-->
                 <div>
                     <label for="type_sponsor_id" class="block text-sm font-medium text-slate-300 mb-2">Tipo de Patrocinador *</label>
@@ -77,9 +76,9 @@
                         oninvalid="this.setCustomValidity('Por favor seleccione un tipo de patrocinador')"
                         oninput="this.setCustomValidity('')"
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none cursor-pointer">
-                        <option value="" class="bg-slate-800" disabled selected>Selecciona un tipo de patrocinador</option>
+                        <option value="" class="bg-slate-800" >Selecciona un tipo de patrocinador</option>
                         @foreach($typeSponsors as $typeSponsor)
-                            <option value="{{ $typeSponsor->id }}" class="bg-slate-800" {{ old('type_sponsor_id', $sponsor->id) == $typeSponsor->id ? 'selected' : '' }}>{{ ucwords($typeSponsor->name) }}</option>
+                            <option value="{{ $typeSponsor->id }}" class="bg-slate-800" {{ old('type_sponsor_id', $sponsor->type_sponsor_id) == $typeSponsor->id ? 'selected' : '' }}>{{ ucwords($typeSponsor->name) }}</option>
                         @endforeach
                     </select>
                     @error('type_sponsor_id')

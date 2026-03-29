@@ -48,7 +48,6 @@
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
-
                 <!-- Categoria de la ponencia -->
                 <div>
                     <label for="category" class="block text-sm font-medium text-slate-300 mb-2">Categoria </label>
