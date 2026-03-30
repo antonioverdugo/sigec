@@ -6,14 +6,14 @@
     <h1 class="pt-12 pb-8 text-4xl text-center font-bold text-white tracking-tight mb-8">Lo sentimos, no pudimos procesar tu solicitud.</h1>
     <div class="text-center">
         @guest
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('posters.public') }}"
                 class="inline-flex items-center justify-center space-x-3 px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
                 <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 <span>Volver</span>
             </a>
         @endguest
         @auth
-            <a href="{{ route('posters.public') }}"
+            <a href="{{ route('dashboard') }}"
                 class="inline-flex items-center justify-center space-x-3 px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
                 <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 <span>Volver</span>

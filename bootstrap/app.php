@@ -20,6 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         \App\Http\Middleware\IsOwnerPresentationCreate::class,
       'owner-poster-create' => \App\Http\Middleware\IsOwnerPosterCreate::class,
       'owner-poster-edit' => \App\Http\Middleware\IsOwnerPosterEdit::class,
+      'published-poster-show' =>
+        \App\Http\Middleware\IsPublishedPosterShow::class,
     ]);
   })
   ->withExceptions(function (Exceptions $exceptions): void {

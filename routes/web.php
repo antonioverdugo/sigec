@@ -173,10 +173,7 @@ Route::middleware(['auth', 'verified', 'admin-speaker'])->group(function () {
     PosterController::class,
     'store',
   ])->name('posters.store');
-  Route::get('/dashboard/posters/{poster}', [
-    PosterController::class,
-    'show',
-  ])->name('posters.show');
+
   Route::get('/dashboard/posters/{poster}/edit', [
     PosterController::class,
     'edit',
@@ -202,6 +199,10 @@ Route::middleware(['auth', 'verified', 'admin-speaker'])->group(function () {
 Route::get('posters/public/', [PosterController::class, 'postersPublic'])->name(
   'posters.public',
 );
+// Ruta para ver el contenido de un poster
+Route::get('posters/public/show/{poster}', [PosterController::class, 'show'])
+  ->name('posters.show')
+  ->middleware('published-poster-show');
 
 // Ruta para filtrar los posters
 Route::get('posters/public/search', [

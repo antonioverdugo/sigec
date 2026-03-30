@@ -117,15 +117,25 @@ class PosterController extends Controller
   }
 
   /**
-   * Muestra los detalles de un póster específico.
+   * Muestra los detalles de un póster individual.
    *
-   * Método vacío reservado para uso futuro.
+   * Recupera el póster a través de route model binding y
+   * obtiene el nombre de su categoría para pasarlo a la
+   * vista de detalle.
    *
-   * @param Poster $poster Póster a mostrar.
+   * @param Poster $poster Póster obtenido mediante route model binding.
+   * @return View Vista con los detalles del póster.
    *
-   * @example GET /posters/{poster}
+   * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+   *         Si el póster no existe.
+   *
+   * @example GET /posters/public/{poster}
    */
-  public function show(Poster $poster) {}
+  public function show(Poster $poster): View
+  {
+    $category = $poster->category->name;
+    return view('posters.show', compact(['poster', 'category']));
+  }
 
   /**
    * Muestra el formulario para editar un póster.

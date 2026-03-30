@@ -3,11 +3,20 @@
 @section('title', 'Posters Publicados - SIGEC')
 
 @section('header-actions')
-    <a href="{{ route('dashboard') }}"
-        class="inline-flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        <span>Volver</span>
-    </a>
+    @auth
+        <a href="{{ route('dashboard') }}"
+            class="inline-flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Volver</span>
+        </a>
+    @endauth
+    @guest
+        <a href="{{ route('home') }}"
+            class="inline-flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
+            <i data-lucide="user" class="w-4 h-4"></i>
+            <span>Login</span>
+        </a>
+    @endguest
 @endsection
 
 @section('content')
