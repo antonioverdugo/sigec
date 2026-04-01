@@ -10,7 +10,9 @@ composer84.bat
 php.bat
 node.bat
 npm.bat
+composer.bat
 /php
+/node
 database/database.sqlite
 /.fleet
 /.idea
