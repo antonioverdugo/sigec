@@ -13,6 +13,7 @@ npm.bat
 composer.bat
 /php
 /node
+/docs
 database/database.sqlite
 /.fleet
 /.idea
