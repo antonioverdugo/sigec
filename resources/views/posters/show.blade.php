@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <div class="h-screen overflow-y-auto">
+    <div class="h-screen">
         <div class="transform translate-z-0">
             <div class="mb-6 text-center sticky top-0 z-50 pt-4 glass-header pb-4">
                 <h1 class="text-4xl font-bold text-white tracking-tight mb-8">Posters Científicos Publicados</h1>
@@ -27,7 +27,11 @@
                 </div>
             </div>
             <div class="space-y-6" id="postersGrid">
-                <iframe src="{{ asset($poster->url_file) }}" width="100%" height="800px"></iframe>
+                <iframe
+                    src="{{ asset('js/pdfjs/web/viewer.html') }}?file={{ urlencode(asset($poster->url_file)) }}#toolbar=0&navpanes=0"
+                    width="100%"
+                    height="800px"
+                ></iframe>
             </div>
         </div>
     </div>

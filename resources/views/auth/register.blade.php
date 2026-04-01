@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="space-y-6 bg-slate-800/50 p-6 sm:p-8 rounded-2xl border border-slate-700/50">
         @csrf
 
         <!-- Name -->
@@ -45,7 +45,7 @@
                 class=" mb-4 w-full h-12 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 active:scale-[0.98] transition-all duration-200 mt-4">
                 {{ __('Registrarse') }}
             </button>
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+            <a class="text-sm text-slate-300 dark:text-slate-400 hover:underline rounded-md " href="{{ route('login') }}">
                 {{ __('¿Ya estás registrado?') }}
             </a>
         </div>

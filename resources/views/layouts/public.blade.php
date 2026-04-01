@@ -9,7 +9,7 @@
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -37,6 +37,7 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(30, 41, 59, 0.8);
         }
+
     </style>
 </head>
 <body class="bg-dark-mesh min-h-screen text-slate-300 overflow-hidden">

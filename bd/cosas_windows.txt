@@ -1,7 +1,30 @@
 instalar php 8.4
 instalar node 24.14
+instalar composer
 composer install
 npm install
 eliminar link a public
 ejecutar php artisan storage:link
 ejecutar php artisan serve
+
+#docker
+cd D:\sigec
+docker compose up -d --build
+http://localhost:8000
+
+# Ver estado
+docker compose ps
+
+# Ver logs
+docker compose logs -f
+
+# Detener
+docker compose down
+
+# Reiniciar
+docker compose restart
+
+# Rebuild (si hiciste cambios)
+docker compose up -d --build
+
+winget install PHP.PHP.8.4

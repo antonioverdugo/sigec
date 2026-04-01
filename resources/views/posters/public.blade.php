@@ -20,7 +20,7 @@
 @endsection
 
 @section('content')
-    <div class="h-screen overflow-y-auto">
+    <div class="h-screen">
         <div class="transform translate-z-0">
             <div class="mb-6 text-center sticky top-0 z-50 pt-4 glass-header pb-4">
                 <h1 class="text-4xl font-bold text-white tracking-tight mb-8">Posters Científicos Publicados</h1>
@@ -57,7 +57,7 @@
                     </form>
                 </div>
             </div>
-            <div class="space-y-6" id="postersGrid">
+            <div class="space-y-6 overflow-y-scroll" id="postersGrid" style="max-height: calc(100vh - 250px);">
                 @forelse($posters as $poster)
                     <x-poster-card
                         :title="$poster->title"
