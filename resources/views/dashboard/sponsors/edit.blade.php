@@ -49,7 +49,7 @@
                         oninvalid="this.setCustomValidity('Por favor introduce un teléfono válido')"
                         oninput="this.setCustomValidity('')"
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                        placeholder="9 dígitos (Móviles que empiecen por 6 o 7 o fijos por 9)"
+                        placeholder="9 dígitos (Móviles que empiecen por 6 o fijos por 9)"
                         value="{{ old('phone', $sponsor->phone === null ? '' : $sponsor->phone) }}">
                     @error('phone')
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
