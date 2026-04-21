@@ -14,6 +14,7 @@ composer.bat
 /php
 /node
 /docs
+/doc-usuario
 database/database.sqlite
 /.fleet
 /.idea

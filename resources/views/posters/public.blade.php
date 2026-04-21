@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Posters Publicados - SIGEC')
+@section('title', 'Pósters Publicados - SIGEC')
 
 @section('header-actions')
     @auth
@@ -23,7 +23,7 @@
     <div class="h-screen">
         <div class="transform translate-z-0">
             <div class="mb-6 text-center sticky top-0 z-50 pt-4 glass-header pb-4">
-                <h1 class="text-4xl font-bold text-white tracking-tight mb-8">Posters Científicos Publicados</h1>
+                <h1 class="text-4xl font-bold text-white tracking-tight mb-8">Pósters Científicos Publicados</h1>
                 <div class="glass-panel p-4 rounded-2xl max-w-5xl mx-auto">
                     <form method="GET" action="{{ route('posters.search') }}" class="flex flex-col md:flex-row items-stretch md:items-end gap-4">
                         <div class="w-full md:flex-1">
@@ -71,8 +71,8 @@
                         <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="file-text" class="w-8 h-8 text-slate-500"></i>
                         </div>
-                        <h3 class="text-xl font-medium text-white mb-2">No hay posters disponibles</h3>
-                        <p class="text-slate-400">Pronto se publicarán nuevos posters científicos.</p>
+                        <h3 class="text-xl font-medium text-white mb-2">No hay pósters disponibles</h3>
+                        <p class="text-slate-400">Pronto se publicarán nuevos pósters científicos.</p>
                     </div>
                 @endforelse
                 <!-- Paginación centrado -->

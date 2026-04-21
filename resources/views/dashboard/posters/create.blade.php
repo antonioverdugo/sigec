@@ -3,8 +3,8 @@
         <!-- Cabecera -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h1 class="text-3xl font-bold text-white tracking-tight">Crear un Poster Científico</h1>
-                <p class="text-slate-400 mt-1">Introduce los datos y crea un poster científico</p>
+                <h1 class="text-3xl font-bold text-white tracking-tight">Crear un Póster Científico</h1>
+                <p class="text-slate-400 mt-1">Introduce los datos y crea un póster científico</p>
             </div>
             <a href="{{route('posters.index')}}"
                 class="inline-flex items-center justify-center space-x-2 px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
@@ -22,7 +22,7 @@
                         oninvalid="this.setCustomValidity('Por favor ingrese un titulo')"
                         oninput="this.setCustomValidity('')"
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                        placeholder="Ingresa el título del poster científico">
+                        placeholder="Ingresa el título del póster científico">
                     @error('title')
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
                     @enderror
@@ -36,8 +36,8 @@
                       id="summary"
                       rows="5"
                       cols="50"
-                      placeholder="Escribe el resumen del poster científico..."
-                      oninvalid="this.setCustomValidity('Por favor ingrese un resumen del poster científico')"
+                      placeholder="Escribe el resumen del póster científico..."
+                      oninvalid="this.setCustomValidity('Por favor ingrese un resumen del póster científico')"
                       oninput="this.setCustomValidity('')"
                       class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       required
@@ -71,7 +71,7 @@
                         oninvalid="this.setCustomValidity('Por favor seleccione un archivo')"
                         oninput="this.setCustomValidity('')"
                         class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                        placeholder="Seleccione el archivo de su poster científico"
+                        placeholder="Seleccione el archivo de su póster científico"
                         accept=".pdf">
                     @error('file')
                         <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
@@ -83,7 +83,7 @@
                     <button type="submit"
                         class="flex-1 inline-flex items-center justify-center space-x-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
                         <i data-lucide="user-plus" class="w-4 h-4"></i>
-                        <span>Crear Poster Científico</span>
+                        <span>Crear Póster Científico</span>
                     </button>
                     <a href="{{ route('posters.index') }}"
                         class="flex-1 inline-flex items-center justify-center space-x-2 px-6 py-3 text-sm font-semibold text-slate-300 bg-slate-700 hover:bg-slate-600 rounded-xl transition-all active:scale-95">

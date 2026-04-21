@@ -38,12 +38,12 @@
                 </div>
                 <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-pink-500/30 transition-colors group">
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-slate-400 text-sm font-medium">Posters Científicos</span>
+                        <span class="text-slate-400 text-sm font-medium">Pósters Científicos</span>
                         <div class="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-colors">
                             <i data-lucide="file-text" class="w-4 h-4"></i>
                         </div>
                     </div>
-                    <h4 class="text-2xl font-bold text-white">{{$posters['total']}} posters</h4>
+                    <h4 class="text-2xl font-bold text-white">{{$posters['total']}} pósters</h4>
                     <h4 class="text-2xl font-bold text-white">{{$posters['published']}} publicados</h4>
                     <p class="text-xs text-slate-500 mt-2">{{$posters['no-published']}} pendientes de revisión</p>
                 </div>

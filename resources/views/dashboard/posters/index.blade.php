@@ -4,18 +4,18 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             @if (Auth::user()->role->name === 'ponente')
             <div>
-                <h1 class="text-3xl font-bold text-white tracking-tight">Gestiona Posters Científicos</h1>
-                <p class="text-slate-400 mt-1">Administra tus posters</p>
+                <h1 class="text-3xl font-bold text-white tracking-tight">Gestiona Pósters Científicos</h1>
+                <p class="text-slate-400 mt-1">Administra tus pósters</p>
             </div>
             <a href="{{ route('posters.create', ['user' => Auth::user()])}}"
                 class="inline-flex items-center justify-center space-x-2 px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 rounded-xl shadow-lg shadow-blue-600/20 transition-all active:scale-95">
                 <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>Crear Poster</span>
+                <span>Crear Póster</span>
             </a>
             @else
             <div>
-                <h1 class="text-3xl font-bold text-white tracking-tight">Gestión de los Posters Científicos</h1>
-                <p class="text-slate-400 mt-1">Administra los posters del sistema</p>
+                <h1 class="text-3xl font-bold text-white tracking-tight">Gestión de los Pósters Científicos</h1>
+                <p class="text-slate-400 mt-1">Administra los pósters del sistema</p>
             </div>
             @endif
         </div>
@@ -95,7 +95,7 @@
                     </div>
                 @empty
                     <div class="px-6 py-8 text-center text-slate-400">
-                       No hay posters registrados
+                       No hay pósters registrados
                     </div>
                 @endforelse
             </div>
@@ -104,7 +104,7 @@
     <!-- Paginación centrado -->
     <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
         <p class="text-sm text-slate-400 order-2 md:order-1">
-            Mostrando {{ $posters->firstItem() }} - {{ $posters->lastItem() }} de {{ $posters->total() }} posters
+            Mostrando {{ $posters->firstItem() }} - {{ $posters->lastItem() }} de {{ $posters->total() }} pósters
         </p>
 
         <nav class="flex gap-2 order-1 md:order-2">
