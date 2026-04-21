@@ -50,7 +50,7 @@
                         <!-- Pintar el archivo -->
                         <div class="text-center">
                             <span class="md:hidden text-xs text-slate-400">Descargar: </span>
-                            <a href="{{ asset($poster->url_file) }}" target="_blank" ><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">Descargar Poster</span></a>
+                            <a href="{{ asset($poster->url_file) }}" target="_blank" ><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">Descargar Póster</span></a>
                         </div>
                         <!-- Pintar la categoria de la poncencia -->
                         <div class="text-sm text-slate-300 text-center break-words">{{ $poster->category->name }}</div>
