@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sponsors', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->unique();
+            $table->string('name', 255);
             $table->string('email', 255);
             $table->string('phone', 13)->nullable();
             $table->float('amount_contributed', 15, 2)->default(0);

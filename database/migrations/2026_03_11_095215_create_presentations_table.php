@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('presentations', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255)->unique();
+            $table->string('title', 255);
             $table->string('summary', 450);
             $table->string('url_file', 450);
             $table->string('type_file', 255);
